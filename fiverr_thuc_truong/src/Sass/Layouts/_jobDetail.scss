@@ -9,7 +9,7 @@
   --green-50: #1cbf71;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 a {
   text-decoration: none;
   color: inherit;
@@ -22,7 +22,7 @@ a {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #1a202c;
@@ -153,6 +153,7 @@ body {
   gap: 80px;
   width: 100%;
   margin-top: 100px;
+  padding: 30px;
 }
 
 /* breadcrumb */

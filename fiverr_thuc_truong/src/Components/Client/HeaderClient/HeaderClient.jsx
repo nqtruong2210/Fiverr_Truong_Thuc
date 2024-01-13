@@ -1,5 +1,5 @@
-import { Close, Search as SearchIcon } from '@mui/icons-material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Close, Search as SearchIcon } from "@mui/icons-material";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Avatar,
   Box,
@@ -15,31 +15,31 @@ import {
   SwipeableDrawer,
   Toolbar,
   Typography,
-} from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getListJobByName } from '../../../API/jobAPI';
-import { useAuth } from '../../../Contexts/useContext/useContext';
-import { PATH } from '../../../Routes/path';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
-import { useHeaderStore } from '../../../store/useHeaderStore';
+} from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getListJobByName } from "../../../API/jobAPI";
+import { useAuth } from "../../../Contexts/useContext/useContext";
+import { PATH } from "../../../Routes/path";
+import { useMediaQuery } from "../../../hooks/useMediaQuery";
+import { useHeaderStore } from "../../../store/useHeaderStore";
 import {
   Search,
   SearchIconWrapper,
   StyledInputBase,
-} from '../SearchBar/SearchBar';
+} from "../SearchBar/SearchBar";
 
 const HeaderClient = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const { sticky, setSticky, setUnSticky, setSearchQuery } = useHeaderStore();
 
-  const media = useMediaQuery('(min-width: 768px)');
-  const mobile = useMediaQuery('(max-width: 650px)');
+  const media = useMediaQuery("(min-width: 768px)");
+  const mobile = useMediaQuery("(max-width: 650px)");
 
   const { isLoading, data: jobs = [] } = useQuery({
-    queryKey: ['jobs', search],
+    queryKey: ["jobs", search],
     queryFn: () => getListJobByName(search),
   });
   const navigate = useNavigate();
@@ -50,16 +50,15 @@ const HeaderClient = () => {
 
   const handleAfterSearch = () => {
     setSearchQuery(search);
-    setSearch('');
+    setSearch("");
   };
 
   const { currentUser, handleLogOut } = useAuth();
-  console.log('currentUser: ', currentUser);
 
   useEffect(() => {
-    window.addEventListener('scroll', isSticky);
+    window.addEventListener("scroll", isSticky);
     return () => {
-      window.removeEventListener('scroll', isSticky);
+      window.removeEventListener("scroll", isSticky);
     };
   });
 
@@ -72,8 +71,8 @@ const HeaderClient = () => {
   const toggleDrawer = (open) => (event) => {
     if (
       event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -85,15 +84,15 @@ const HeaderClient = () => {
     <Box
       role="presentation"
       sx={{
-        p: '1rem',
-        maxWidth: '100%',
+        p: "1rem",
+        maxWidth: "100%",
         minWidth: 300,
       }}
       onKeyDown={toggleDrawer(false)}
     >
       <List>
         <ListItem
-          sx={{ my: 2, display: 'flex', justifyContent: 'space-between' }}
+          sx={{ my: 2, display: "flex", justifyContent: "space-between" }}
         >
           <Link to="/sign-in">
             <Button variant="contained" color="success">
@@ -106,16 +105,16 @@ const HeaderClient = () => {
           </IconButton>
         </ListItem>
 
-        {['Fiverr Pro', 'Explore', 'Messages', 'List', 'Order'].map((text) => (
+        {["Fiverr Pro", "Explore", "Messages", "List", "Order"].map((text) => (
           <>
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemText
                   sx={{
-                    color: '#62646a',
-                    fontSize: '32px',
-                    fontWeight: '600',
-                    marginBottom: '16px',
+                    color: "#62646a",
+                    fontSize: "32px",
+                    fontWeight: "600",
+                    marginBottom: "16px",
                   }}
                   primary={text}
                 />
@@ -130,7 +129,7 @@ const HeaderClient = () => {
 
   return (
     <Box
-      className={`header-section header-container ${sticky ? 'is-sticky' : ''}`}
+      className={`header-section header-container ${sticky ? "is-sticky" : ""}`}
       sx={{ flexGrow: 1 }}
     >
       <Toolbar className="header-toolbar">
@@ -141,13 +140,13 @@ const HeaderClient = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mx: 1, color: sticky ? '#333' : 'white' }}
+            sx={{ mx: 1, color: sticky ? "#333" : "white" }}
           >
             <MenuIcon />
           </IconButton>
         )}
         <SwipeableDrawer
-          anchor={'left'}
+          anchor={"left"}
           open={open}
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
@@ -157,29 +156,29 @@ const HeaderClient = () => {
         <Typography
           variant="h6"
           component="div"
-          sx={{ display: { xs: 'none', sm: 'block' } }}
+          sx={{ display: { xs: "none", sm: "block" } }}
           onClick={() => {
             navigate(PATH.HOME);
           }}
         >
           <img
-            src={sticky ? '/Image/logoFiverr.jpg' : '/Image/logo.svg'}
+            src={sticky ? "/Image/logoFiverr.jpg" : "/Image/logo.svg"}
             alt=""
-            style={{ width: 100, cursor: 'pointer' }}
+            style={{ width: 100, cursor: "pointer" }}
           />
         </Typography>
-        <Search sx={{ bgcolor: !sticky && 'white' }}>
+        <Search sx={{ bgcolor: !sticky && "white" }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
             placeholder="Search…"
-            value={search || ''}
+            value={search || ""}
             onChange={handleSearch}
-            inputProps={{ 'aria-label': 'search' }}
+            inputProps={{ "aria-label": "search" }}
           />
 
-          <Box position={'absolute'} minWidth={400} bgcolor={'white'}>
+          <Box position={"absolute"} minWidth={400} bgcolor={"white"}>
             {isLoading ? (
               <ListItem alignItems="flex-start">
                 <p>Loading ....</p>
@@ -188,9 +187,9 @@ const HeaderClient = () => {
               jobs.map((job) => (
                 <Link
                   key={job.id}
-                  to={'jobs/' + job.id}
+                  to={"jobs/" + job.id}
                   onClick={handleAfterSearch}
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                 >
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
@@ -201,7 +200,7 @@ const HeaderClient = () => {
                       secondary={
                         <React.Fragment>
                           <Typography
-                            sx={{ display: 'inline' }}
+                            sx={{ display: "inline" }}
                             component="span"
                             variant="body2"
                             color="text.primary"
@@ -221,9 +220,9 @@ const HeaderClient = () => {
         {currentUser ? (
           <Stack
             spacing={2}
-            direction={'row'}
-            textAlign={'center'}
-            alignItems={'center'}
+            direction={"row"}
+            textAlign={"center"}
+            alignItems={"center"}
           >
             <Typography>{currentUser.user.name}</Typography>
             <Button
@@ -238,16 +237,16 @@ const HeaderClient = () => {
             </Button>
           </Stack>
         ) : (
-          <Stack spacing={1} direction={'row'}>
+          <Stack spacing={1} direction={"row"}>
             {!mobile && (
               <>
                 <Button
                   variant="outlined"
                   sx={{
-                    fontSize: media ? '16px' : '14px',
-                    textTransform: 'capitalize',
-                    borderColor: !sticky ? 'white' : 'black',
-                    color: !sticky ? 'white' : 'black',
+                    fontSize: media ? "16px" : "14px",
+                    textTransform: "capitalize",
+                    borderColor: !sticky ? "white" : "black",
+                    color: !sticky ? "white" : "black",
                   }}
                   onClick={() => {
                     navigate(PATH.SIGNUP);
@@ -259,8 +258,8 @@ const HeaderClient = () => {
                   variant="contained"
                   color="success"
                   sx={{
-                    fontSize: media ? '16px' : '14px',
-                    textTransform: 'capitalize',
+                    fontSize: media ? "16px" : "14px",
+                    textTransform: "capitalize",
                   }}
                   onClick={() => {
                     navigate(PATH.SIGNIN);
