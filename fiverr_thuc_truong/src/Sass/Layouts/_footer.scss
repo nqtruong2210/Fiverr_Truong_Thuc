@@ -1,0 +1,22 @@
+.footer-link {
+  & a {
+    text-decoration: none;
+    color: #666;
+  }
+
+  &:hover {
+    a::after {
+      width: 100%;
+    }
+  }
+
+  & a::after {
+    background: #74767e;
+    content: '';
+    height: 1px;
+    width: 0;
+    z-index: 1;
+    color: #74767e;
+    display: block;
+  }
+}

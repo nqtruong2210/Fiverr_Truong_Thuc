@@ -1,14 +1,17 @@
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PATH } from "./Routes/path";
-import ClientLayout from "./Layouts/ClientLayout";
-import Home from "./Modules/Home";
-import { UserProvider } from "./Contexts/useContext/useContext";
-import SignUp from "./Modules/Auth/SignUp/SignUp";
-import SignIn from "./Modules/Auth/SignIn/SignIn";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import NotFound from "./Modules/NotFound";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
+import { UserProvider } from './Contexts/useContext/useContext';
+import AuthLayout from './Layouts/AuthLayout.jsx/AuthLayout';
+import ClientLayout from './Layouts/ClientLayout';
+import SignIn from './Modules/Auth/SignIn/SignIn';
+import SignUp from './Modules/Auth/SignUp/SignUp';
+import Home from './Modules/Home';
+import ListJob from './Modules/Jobs/ListJob';
+import NotFound from './Modules/NotFound';
+import { PATH } from './Routes/path';
+import JobDetail from './Modules/Job-Detail/Job-Detail';
 
 function App() {
   return (
@@ -18,9 +21,15 @@ function App() {
           <Routes>
             <Route path={PATH.HOME} element={<ClientLayout />}>
               <Route index element={<Home />} />
+              <Route path={PATH.JOBS} element={<ListJob />} />
+              <Route path={PATH.JOBDETAIL} element={<JobDetail />} />
+            </Route>
+
+            <Route path={PATH.HOME} element={<AuthLayout />}>
               <Route path={PATH.SIGNUP} element={<SignUp />} />
               <Route path={PATH.SIGNIN} element={<SignIn />} />
             </Route>
+
             <Route path={PATH.NOTFOUND} element={<NotFound />} />
           </Routes>
         </BrowserRouter>

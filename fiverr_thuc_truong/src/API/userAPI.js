@@ -1,7 +1,7 @@
 import fetcher from "./fetcher";
 
 // Đăng nhập
-export const signInAPI = async (data) => {
+const signInAPI = async (data) => {
   try {
     const response = await fetcher.post("/auth/signin", data);
     return response.data.content;
@@ -11,7 +11,7 @@ export const signInAPI = async (data) => {
 };
 
 // Đăng ký
-export const signUpAPI = async (data) => {
+const signUpAPI = async (data) => {
   try {
     const response = await fetcher.post("/auth/signup", data);
     console.log("SignUp:", data);
@@ -21,3 +21,15 @@ export const signUpAPI = async (data) => {
     throw Error("Error!!!");
   }
 };
+const getUserById = async (id) => {
+  try {
+    const response = await fetcher.get(
+      `/users/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(`FE Error:${error}`);
+  }
+}
+
+export { signInAPI, signUpAPI, getUserById };

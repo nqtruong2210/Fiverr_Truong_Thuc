@@ -1,6 +1,8 @@
 export const PATH = {
-  HOME: "/",
-  SIGNUP: "/sign-up",
-  SIGNIN: "/sign-in",
-  NOTFOUND: "*",
+  HOME: '/',
+  JOBS: '/jobs/:id',
+  SIGNUP: 'sign-up',
+  SIGNIN: '/sign-in',
+  NOTFOUND: '*',
+  JOBDETAIL: '/job-detail/:id'
 };

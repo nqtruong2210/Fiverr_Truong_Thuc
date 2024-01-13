@@ -1,44 +1,76 @@
 import {
+  Box,
   Button,
   Container,
   Grid,
   Stack,
   TextField,
   Typography,
-} from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { signInAPI } from "../../../API/userAPI";
+} from '@mui/material';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { signInAPI } from '../../../API/userAPI';
+import { useAuth } from '../../../Contexts/useContext/useContext';
+import { PATH } from '../../../Routes/path';
+import { useMediaQuery } from '../../../hooks/useMediaQuery';
 
 const SignIn = () => {
+  const { handleSignIn: handleSignInContext, currentUser } = useAuth();
+  const navigate = useNavigate();
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
-    mode: "all",
+    mode: 'all',
   });
 
   const { mutate: handleSignin } = useMutation({
     mutationFn: (values) => signInAPI(values),
-    onSuccess: () => {},
+    onSuccess: (values) => {
+      handleSignInContext(values);
+      if (values.role === 'USER') navigate(PATH.HOME);
+
+      if (values.role === 'ADMIN') navigate(PATH.ADMIN);
+    },
+    onError: () => {
+      alert('Account does not exist');
+    },
   });
+
+  // if (currentUser) {
+  //   return <Navigate to={PATH.HOME} />;
+  // }
 
   const onSubmit = (formValue) => {
     handleSignin(formValue);
   };
-  return (
-    <Container maxWidth="sm">
-      <Typography variant="h5" textAlign={"center"} mb={2}>
-        Login
-      </Typography>
+  const media = useMediaQuery('(min-width: 768px)');
 
-      <Grid container justifyContent={"center"} alignItems={"center"}>
+  return (
+    <Container
+      maxWidth="sm"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: media ? '100vh' : '500px',
+      }}
+    >
+      <Box>
+        <Typography variant="h5" textAlign={'center'} mb={2}>
+          Login
+        </Typography>
+      </Box>
+
+      <Grid container justifyContent={'center'} alignItems={'center'}>
         <Grid item md={6}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3}>
-              <TextField label="Email" fullWidth mb={3} {...register("email")}>
+              <TextField label="Email" fullWidth mb={3} {...register('email')}>
                 Email
               </TextField>
               <TextField
@@ -46,7 +78,7 @@ const SignIn = () => {
                 label="Password"
                 fullWidth
                 type="password"
-                {...register("password")}
+                {...register('password')}
               >
                 Password
               </TextField>

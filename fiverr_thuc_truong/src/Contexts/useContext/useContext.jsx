@@ -11,17 +11,17 @@ export const UserProvider = ({ children }) => {
     return user || null;
   });
 
-  const handleSignin = (user) => {
+  const handleSignIn = (user) => {
     setCurrentUser(user);
     localStorage.setItem(CURRENT_USER, JSON.stringify(user));
   };
 
-  const handleLogout = () => {
+  const handleLogOut = () => {
     setCurrentUser(null);
     localStorage.clear(CURRENT_USER);
   };
   return (
-    <UserContext.Provider value={{ currentUser, handleSignin, handleLogout }}>
+    <UserContext.Provider value={{ currentUser, handleSignIn, handleLogOut }}>
       {children}
     </UserContext.Provider>
   );

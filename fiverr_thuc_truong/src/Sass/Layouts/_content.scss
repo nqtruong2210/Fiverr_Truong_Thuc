@@ -1,0 +1,129 @@
+.container-content {
+  background-color: #f0fdf6;
+  color: #000000;
+  font-size: 14px;
+  grid-area: auto;
+  line-height: 22.001px;
+  padding: 50px 0px 70px;
+}
+
+.sub-container {
+  align-items: center;
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+  font-size: 14px;
+  grid-area: auto;
+  justify-content: space-between;
+  line-height: 22.001px;
+  margin: auto;
+  // border: 1px solid red;
+}
+
+.sub-container .left {
+  color: #000000;
+  font-size: 14px;
+  grid-area: auto;
+  line-height: 22.001px;
+  padding: 0px;
+  width: 48%;
+  // border: 1px solid red;
+}
+
+.left h2 {
+  color: #404145;
+  font-family: Montserrat;
+  font-size: 45px;
+  font-weight: 700;
+  grid-area: auto;
+  line-height: 38.4px;
+  margin: 0px 0px 50px 16px;
+  // border: 1px solid red;
+}
+
+.left .title {
+  font-family: Montserrat;
+  font-size: 22px;
+  font-weight: 700;
+  grid-area: auto;
+  line-height: 21.6px;
+  margin: 0px 0px 7px;
+  text-align: left;
+  vertical-align: middle;
+  // border: 1px solid red;
+}
+
+.left .icon {
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.left .content {
+  font-family: Montserrat;
+  font-size: 18px;
+  // font-weight: 700;
+  grid-area: auto;
+  line-height: 21.6px;
+  margin: 0px 0px 9px;
+  text-align: left;
+  padding: 8px 0px;
+}
+
+.right {
+  color: #000000;
+  font-size: 14px;
+  grid-area: auto;
+  line-height: 22.001px;
+  padding: 50px 0px;
+  width: 50%;
+  // border: 1px solid red;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.right img {
+  width: 620px;
+  height: 420px;
+  color: #191c1f;
+  display: inline;
+  // grid-area: auto;
+  // line-height: 24px;
+  // text-align: center;
+  margin: auto;
+  // border: 1px solid blue;
+}
+
+.modal-btn::after {
+  background: url('https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/apps/desktop-play-button.c1196d6.png')
+    no-repeat;
+  background-size: 80px;
+  content: '';
+  display: inline-block;
+  height: 80px;
+  left: 50%;
+  position: absolute;
+  top: 40%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 80px;
+  z-index: 1;
+}
+@media screen and (max-width: 768px) {
+  .container-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .left {
+    width: 100% !important;
+    // border: 1px solid red;
+  }
+  .right img {
+    // border: 1px solid red;
+    width: 320px;
+    height: 220px;
+    // align-items: center;
+    margin-left: 32px;
+  }
+}

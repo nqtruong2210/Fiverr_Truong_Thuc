@@ -1,0 +1,36 @@
+.header-container {
+  position: absolute;
+  top: 0;
+  // left: 0;
+  width: 100%;
+  padding: 20px 80px;
+  background-color: transparent;
+  // color: white;
+  z-index: 1;
+  // display: none;
+  // border: 1px solid red;
+}
+.is-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #ffffff !important;
+  animation: 500ms ease-in-out 0s normal none 1 running fadeInDown;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media screen and (max-width: 768px) {
+  .header-container {
+    padding: 20px 0px;
+
+    // height: auto;
+  }
+}

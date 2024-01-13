@@ -1,0 +1,23 @@
+.category-icon {
+  &::after {
+    border-bottom: 2px solid #c5c6c9;
+    border-color: 0.2s ease-in-out, padding 0.2s ease-in-out !important;
+    content: '';
+    padding: 0 0 8px;
+    position: absolute;
+    right: 50%;
+    top: 60px;
+    -webkit-transform: translateX(50%);
+    transform: translateX(50%);
+    width: 48px;
+  }
+
+  &:hover {
+    &::after {
+      border-color: #1dbf73;
+      border-color: 0.2s ease-in-out, padding 0.2s ease-in-out !important;
+      width: 60%;
+      transition: all 0.1s ease-in-out;
+    }
+  }
+}
