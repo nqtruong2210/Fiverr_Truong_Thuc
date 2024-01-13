@@ -6,10 +6,11 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+
 const JobCard = ({ congViec }) => {
   return (
     congViec && (
-      <Card sx={{ flexGrow: 1 }}>
+      <Card sx={{ flexGrow: 1 }} >
         <CardMedia
           sx={{ height: 200 }}
           image={congViec.hinhAnh}
@@ -33,7 +34,7 @@ const JobCard = ({ congViec }) => {
           </Box>
 
           <Typography variant="body2" color="text.secondary">
-            {congViec.tencongViec}
+            {congViec.tenCongViec}
           </Typography>
 
           <Box display={'flex'}>

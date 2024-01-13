@@ -83,7 +83,7 @@ const CarouselItem = () => {
             jobs.map((job) => (
               <Link
                 key={job.id}
-                to={'jobs/' + job.id}
+                to={`jobs/${job.id}`}
                 onClick={handleSearch}
                 style={{ textDecoration: 'none' }}
               >

@@ -11,6 +11,7 @@ import Home from './Modules/Home';
 import ListJob from './Modules/Jobs/ListJob';
 import NotFound from './Modules/NotFound';
 import { PATH } from './Routes/path';
+import JobDetail from './Modules/Job-Detail/Job-Detail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path={PATH.HOME} element={<ClientLayout />}>
               <Route index element={<Home />} />
               <Route path={PATH.JOBS} element={<ListJob />} />
+              <Route path={PATH.JOBDETAIL} element={<JobDetail />} />
             </Route>
 
             <Route path={PATH.HOME} element={<AuthLayout />}>

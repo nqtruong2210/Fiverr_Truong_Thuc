@@ -21,5 +21,15 @@ const signUpAPI = async (data) => {
     throw Error("Error!!!");
   }
 };
+const getUserById = async (id) => {
+  try {
+    const response = await fetcher.get(
+      `/users/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(`FE Error:${error}`);
+  }
+}
 
-export { signInAPI, signUpAPI };
+export { signInAPI, signUpAPI, getUserById };
