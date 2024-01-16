@@ -12,18 +12,14 @@ const fetcher = axios.create({
 });
 
 // Authorization
-fetcher.interceptors.request.use(
-  (config) => {
-    const user = JSON.parse(localStorage.getItem(CURRENT_USER));
-    // console.log(user.token);
-    if (user) {
-      // config.headers["Authorization"] = user.token;
-      // config.headers.Authorization = 'Bearer' + user.token;
-      config.headers.Authorization = `Bearer ${user.token}`;
-    }
-    return config;
+fetcher.interceptors.request.use((config) => {
+  const user = JSON.parse(localStorage.getItem(CURRENT_USER));
+  if (user) {
+    // config.headers["Authorization"] = user.token;
+    // config.headers.Authorization = `Bearer ${user.token}`;
+    config.headers.token = `${user.token}`;
   }
-  // (error) => Promise.reject(error)
-);
+  return config;
+});
 
 export default fetcher;

@@ -1,9 +1,9 @@
-import fetcher from './fetcher';
+import fetcher from "./fetcher";
 
 // API lấy menu loại công việc
 const getJobTypeMenuAPI = async () => {
   try {
-    const response = await fetcher.get('/cong-viec/lay-menu-loai-cong-viec');
+    const response = await fetcher.get("/cong-viec/lay-menu-loai-cong-viec");
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);
@@ -37,8 +37,7 @@ const getJobByTypeDetails = async (maChiTietLoai) => {
 const layChiTietLoaiCongViec = async (maLoaiCongViec) => {
   try {
     const response = await fetcher.get(
-      '/cong-viec/lay-menu-loai-cong-viec',
-      maLoaiCongViec.id
+      `/cong-viec/lay-chi-tiet-loai-cong-viec/${maLoaiCongViec}`
     );
     return response.data.content;
   } catch (error) {
@@ -52,6 +51,7 @@ const layCongViecChiTiet = async (maCongViec) => {
     const response = await fetcher.get(
       `/cong-viec/lay-cong-viec-chi-tiet/${maCongViec}`
     );
+    console.log("API Response:", response.data);
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);
@@ -67,27 +67,23 @@ const layBinhLuan = async (maCongViec) => {
   } catch (error) {
     console.log(`FE Error:${error}`);
   }
-}
+};
 const thueCongViec = async (data) => {
   try {
-    const response = await fetcher.post(
-      '/thue-cong-viec', data
-    );
+    const response = await fetcher.post("/thue-cong-viec", data);
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);
   }
-}
+};
 const binhLuan = async (data) => {
   try {
-    const response = await fetcher.post(
-      '/binh-luan', data
-    );
+    const response = await fetcher.post("/binh-luan", data);
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);
   }
-}
+};
 export {
   getJobByTypeDetails,
   getJobTypeMenuAPI,
@@ -96,5 +92,5 @@ export {
   layCongViecChiTiet,
   layBinhLuan,
   thueCongViec,
-  binhLuan
+  binhLuan,
 };

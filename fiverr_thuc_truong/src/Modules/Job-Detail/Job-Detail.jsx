@@ -39,12 +39,10 @@ const JobDetail = () => {
       maNguoiThue: dataUser.user.id,
       ngayThue: formattedToday,
     };
-    console.log(dataThue);
     await fetcher.post("/thue-cong-viec", dataThue).then((res) => {
       console.log(res);
     });
   };
-  //
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
