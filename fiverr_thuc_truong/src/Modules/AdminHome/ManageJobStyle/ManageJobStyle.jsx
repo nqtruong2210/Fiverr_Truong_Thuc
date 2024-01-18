@@ -23,10 +23,11 @@ import { PATH } from "../../../Routes/path";
 import ModalField from "../ModalField/ModalField";
 import Search from "../Search/Search";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteJobStyle, getListJobStyle } from "../../../API/AdminTechnique";
 import Swal from "sweetalert2";
+import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
 
 
 const ManageJobStyle = () => {

@@ -26,9 +26,10 @@ import { useDispatch } from "react-redux";
 import { PATH } from "../../../Routes/path";
 import ModalField from "../ModalField/ModalField";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteJobDetails, getListJobStyleDetails } from "../../../API/AdminTechnique";
+import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
 
 const ManageJobDetails = () => {
   const [pageIndex, setPageIndex] = useState(1);

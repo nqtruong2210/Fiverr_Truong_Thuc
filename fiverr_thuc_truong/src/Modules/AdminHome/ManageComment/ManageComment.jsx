@@ -24,9 +24,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { PATH } from "../../../Routes/path";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteCommentAPI, getListCommentAPI } from "../../../API/AdminTechnique";
+import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
 
 
 

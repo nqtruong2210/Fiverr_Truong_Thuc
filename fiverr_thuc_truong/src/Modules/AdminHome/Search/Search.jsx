@@ -5,7 +5,7 @@ const Search = ({setKeyword}) => {
   return (
     <Box width={"72%"}>
       <TextField
-        placeholder="name or id"
+        placeholder="Search..."
         onChange={(e) => setKeyword(e.target.value)}
         sx={{
           width: {

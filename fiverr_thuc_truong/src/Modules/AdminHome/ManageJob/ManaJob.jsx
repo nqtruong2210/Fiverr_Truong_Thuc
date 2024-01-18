@@ -16,8 +16,6 @@ import {
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -26,8 +24,8 @@ import Search from "../Search/Search";
 import ModalField from "../ModalField/ModalField";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
-import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
 import { deleteJob, getListJobPagination } from "../../../API/AdminTechnique";
+import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
 
 const ManaJob = () => {
   const dispatch = useDispatch();
