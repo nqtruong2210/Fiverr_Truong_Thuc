@@ -6,4 +6,16 @@ export const PATH = {
   NOTFOUND: "*",
   JOBDETAIL: "/job-detail/:id",
   JOBTYPE: "/job-type/:id",
+  ADMIN: "admin",
+  ADMIN_REGISTER: "admin-register",
+  ADMIN_LOGIN: "admin-login",
+  MANAGE_USER: "manage-user",
+  MANAGE_JOB: "manage-job",
+  MANAGE_JOBSTYLE: "manage-jobstyle",
+  MANAGE_SERVICES: "manage-services",
+  PROFILE: "profile",
+  EDIT_DATA: "edit-data",
+  ADD_DATA: "add-data",
+  MANAGE_JOBDETAILS: "manage-jobdetails",
+  MANAGE_COMMENT: "manage-comment"
 };
