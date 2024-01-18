@@ -17,5 +17,5 @@ export const PATH = {
   EDIT_DATA: "edit-data",
   ADD_DATA: "add-data",
   MANAGE_JOBDETAILS: "manage-jobdetails",
-  MANAGE_COMMENT: "manage-comment"
+  MANAGE_COMMENT: "manage-comment",
 };
