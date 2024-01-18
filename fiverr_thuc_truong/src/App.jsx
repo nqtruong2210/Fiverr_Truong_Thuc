@@ -13,6 +13,18 @@ import NotFound from "./Modules/NotFound";
 import { PATH } from "./Routes/path";
 import JobDetail from "./Modules/Job-Detail/Job-Detail";
 import JobType from "./Modules/JobType";
+import AdminLayout from "./Layouts/AdminLayout";
+import ManageUser from "./Modules/AdminHome/ManageUser/ManageUser";
+import ManaJob from "./Modules/AdminHome/ManageJob/ManaJob";
+import Profile from "./Modules/AdminHome/Profile/Profile";
+import EditData from "./Modules/AdminHome/EditData/EditData";
+import ManageJobStyle from "./Modules/AdminHome/ManageJobStyle/ManageJobStyle";
+import AddData from "./Modules/AdminHome/AddData/AddData";
+import ManageJobDetails from "./Modules/AdminHome/ManageJobDetails/ManageJobDetails";
+import ManageServices from "./Modules/AdminHome/ManageServices/ManageServices";
+import ManageComment from "./Modules/AdminHome/ManageComment/ManageComment";
+import AdminLogin from "./Modules/Auth/Admin/Login/AdminLogin";
+
 
 function App() {
   return (
@@ -30,7 +42,21 @@ function App() {
               <Route path={PATH.SIGNUP} element={<SignUp />} />
               <Route path={PATH.SIGNIN} element={<SignIn />} />
             </Route>
-
+            <Route path={PATH.ADMIN} element={<AdminLayout />}>
+              <Route path={PATH.MANAGE_USER} index element={<ManageUser />} />
+              <Route path={PATH.MANAGE_JOB} element={<ManaJob />} />
+              <Route path={PATH.PROFILE} element={<Profile />} />
+              <Route path={PATH.EDIT_DATA} element={<EditData />} />
+              <Route path={PATH.MANAGE_JOBSTYLE} element={<ManageJobStyle />} />
+              <Route path={PATH.ADD_DATA} element={<AddData />} />
+              <Route
+                path={PATH.MANAGE_JOBDETAILS}
+                element={<ManageJobDetails />}
+              />
+              <Route path={PATH.MANAGE_SERVICES} element={<ManageServices />} />
+              <Route path={PATH.MANAGE_COMMENT} element={<ManageComment />} />
+            </Route>
+            <Route path={PATH.ADMIN_LOGIN} element={<AdminLogin />} />
             <Route path={PATH.NOTFOUND} element={<NotFound />} />
           </Routes>
         </BrowserRouter>
