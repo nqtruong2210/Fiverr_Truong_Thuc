@@ -1,13 +1,14 @@
 import { Box, Modal } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
+
 import JobStyleInfo from "./JobStyleInfo";
 import JobDetailsInfo from "./JobDetailsInfo";
 import UserInfo from "./UserInfo";
 import ServicesInfo from "./ServicesInfo";
 import CommentInfo from "./CommentInfo";
 import JobInfo from "./JobInfo";
+import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
 
 const ModalField = () => {
   const {

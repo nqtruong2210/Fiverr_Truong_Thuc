@@ -27,7 +27,8 @@ import { AddDataActions } from "../../../store/AddDataSlice/slice";
 
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteServices, getListService } from "../../../API/AdminTechnique";
-import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
+import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 
 
 const ManageServices = () => {

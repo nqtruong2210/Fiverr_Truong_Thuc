@@ -28,9 +28,10 @@ import {
 import Search from "../Search/Search";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
-import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
+
 import "../../../Sass/admin/btnStyle.scss";
 import "../../../Sass/admin/tableStyle.scss";
+import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
 
 const style = {
   position: "absolute",
