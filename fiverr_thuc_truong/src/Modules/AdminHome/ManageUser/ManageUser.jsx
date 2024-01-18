@@ -12,19 +12,15 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useState } from "react";
-
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Swal from "sweetalert2";
-
 import dayjs from "dayjs";
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { PATH } from "../../../Routes/path";
 import ModalField from "../ModalField/ModalField";
-
 import {
   deleteUserAPI,
   getListUserPagination,
@@ -33,6 +29,8 @@ import Search from "../Search/Search";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
+import "../../../Sass/admin/btnStyle.scss";
+import "../../../Sass/admin/tableStyle.scss";
 
 const style = {
   position: "absolute",
@@ -106,16 +104,22 @@ const ManageUser = () => {
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
+          margin:3
         }}
       >
-        <Button onClick={handleAddAdmin}>Add ADMIN</Button>
+        <button className="button-14" role="button" onClick={handleAddAdmin}>
+          <Box className="button-14-top text">Add Admin</Box>
+          <Box className="button-14-bottom" />
+          <Box className="button-14-base" />
+        </button>
+
         <Search setKeyword={setKeyword} />
       </Box>
       <ModalField />
       <Box>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead sx={{padding:3}}>
+        <TableContainer  className="tableBackground">
+          <Table className="tableStyle">
+            <TableHead sx={{ padding: 3 }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return (

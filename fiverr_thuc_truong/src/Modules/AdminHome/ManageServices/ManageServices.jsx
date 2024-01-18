@@ -24,9 +24,10 @@ import ModalField from "../ModalField/ModalField";
 import { PATH } from "../../../Routes/path";
 import dayjs from "dayjs";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteServices, getListService } from "../../../API/AdminTechnique";
+import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
 
 
 const ManageServices = () => {
