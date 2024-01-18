@@ -27,7 +27,8 @@ import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteJobStyle, getListJobStyle } from "../../../API/AdminTechnique";
 import Swal from "sweetalert2";
-import { ShowDataActions } from "../../../Store/ShowDataSlice/slice";
+import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
+
 
 
 const ManageJobStyle = () => {
