@@ -25,12 +25,23 @@ const signUpAPI = async (data) => {
 // Lấy user/:id
 const getUserById = async (id) => {
   try {
-    const response = await fetcher.get(`/users`, id);
-    console.log("User:", data);
+    const response = await fetcher.get(`/users/${id}`);
+    // console.log("User:", response.data.content);
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);
   }
 };
 
-export { signInAPI, signUpAPI, getUserById };
+// Thuê công việc/ lấy danh sách đã thuê
+const getHiredJob = async () => {
+  try {
+    const response = await fetcher.get(`/thue-cong-viec/lay-danh-sach-da-thue`);
+    // console.log("User:", response.data.content);
+    return response.data.content;
+  } catch (error) {
+    console.log(`FE Error:${error}`);
+  }
+};
+
+export { signInAPI, signUpAPI, getUserById, getHiredJob };

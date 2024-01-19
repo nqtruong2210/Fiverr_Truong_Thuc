@@ -33,7 +33,6 @@ const SignIn = () => {
     onSuccess: (values) => {
       handleSignInContext(values);
       if (values.user.role === "USER") return navigate(PATH.HOME);
-
       if (values.user.role === "ADMIN") return navigate(PATH.ADMIN);
     },
     onError: () => {
