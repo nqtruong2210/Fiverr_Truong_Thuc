@@ -9,7 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useHeaderStore } from "../../store/useHeaderStore";
 import EditIcon from "@mui/icons-material/Edit";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -20,8 +20,6 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
 import { getHiredJob, getUserById } from "../../API/userAPI";
-import { CURRENT_USER } from "../../Constants";
-import { PATH } from "../../Routes/path";
 
 const Users = ({}) => {
   const { sticky, setSticky } = useHeaderStore();
