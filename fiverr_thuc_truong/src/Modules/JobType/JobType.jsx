@@ -23,7 +23,7 @@ const JobType = () => {
   const media = useMediaQuery("(min-width: 768px)");
   let { id } = useParams();
 
-  const { data: jobType } = useQuery({
+  const { data: jobType = [] } = useQuery({
     queryKey: ["job-type", id],
     queryFn: () => layChiTietLoaiCongViec(id),
   });

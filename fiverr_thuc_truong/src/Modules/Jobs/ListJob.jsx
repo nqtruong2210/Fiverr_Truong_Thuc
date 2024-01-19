@@ -40,7 +40,7 @@ function ListJob() {
     queryKey: ["jobs", id],
     queryFn: () => getJobByTypeDetails(id),
   });
-  // console.log(jobItems);
+
   if (isLoading) {
     return <Spinning />;
   }

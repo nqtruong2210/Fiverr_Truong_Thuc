@@ -24,7 +24,7 @@ import ManageJobDetails from "./Modules/AdminHome/ManageJobDetails/ManageJobDeta
 import ManageServices from "./Modules/AdminHome/ManageServices/ManageServices";
 import ManageComment from "./Modules/AdminHome/ManageComment/ManageComment";
 import AdminLogin from "./Modules/Auth/Admin/Login/AdminLogin";
-
+import Users from "./Modules/Users/Users";
 
 function App() {
   return (
@@ -37,6 +37,7 @@ function App() {
               <Route path={PATH.JOBS} element={<ListJob />} />
               <Route path={PATH.JOBDETAIL} element={<JobDetail />} />
               <Route path={PATH.JOBTYPE} element={<JobType />} />
+              <Route path={PATH.USERS} element={<Users />} />
             </Route>
             <Route path={PATH.HOME} element={<AuthLayout />}>
               <Route path={PATH.SIGNUP} element={<SignUp />} />
