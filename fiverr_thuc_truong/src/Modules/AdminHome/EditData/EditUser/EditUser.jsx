@@ -4,22 +4,58 @@ import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { Grid, IconButton, InputAdornment, MenuItem, Stack, TextField, Typography } from "@mui/material";
+import {
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LoadingButton } from "@mui/lab";
 import dayjs from "dayjs";
 import { UpdateUserData } from "../../../../API/AdminTechnique";
+import Swal from "sweetalert2";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
 
-const EditUser = ({data}) => {
+const schemaEdit = yup.object({
+  id: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  name: yup.string().required("Vui Lòng Nhập Thông Tin"),
+  email: yup
+    .string()
+    .email("Vui Lòng Nhập Đúng Định Dạng Mail")
+    .required("Vui Lòng Nhập Thông Tin"),
+
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Password phải có ít nhất 12 ký tự gồm 1 ký tự viết hoa, 1 ký tự thường, 1 ký tự số, 1 ký tự đặc biệt"
+    )
+    .required("Vui Lòng Nhập Thông Tin"),
+  phone: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  birthday: yup.date().required("Vui lòng chọn ngày"),
+  gender: yup.boolean().required("Vui Lòng Chọn giới tính"),
+});
+const EditUser = ({ data }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate()
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
     setValue,
-    reset,
   } = useForm({
     defaultValues: {
       id: data.id,
@@ -33,13 +69,22 @@ const EditUser = ({data}) => {
       skill: data.skill,
       certification: data.certification,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
 
   //tanstack
   const { mutate: handleUpdate, isPending } = useMutation({
     mutationFn: (values) => UpdateUserData(values),
     onSuccess: () => {
-      queryClient.invalidateQueries(["LIST_USER_PAGINATION"]);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập Nhật Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      }),
+        navigate("/admin/manage-user");
     },
     onError: () => {
       alert("loi~vai");
@@ -66,62 +111,116 @@ const EditUser = ({data}) => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Grid item >
+        <Grid item>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3}>
-              <TextField
-                label="Name"
-                fullWidth
+              <Controller
+                name="id"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="ID"
+                    {...field}
+                    disabled
+                    error={Boolean(errors.id)}
+                    helperText={Boolean(errors.id) && errors.id.message}
+                  />
+                )}
+              />
+              <Controller
                 name="name"
-                {...register("name")}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Name"
+                    fullWidth
+                    name="name"
+                    {...field}
+                    error={Boolean(errors.name)}
+                    helperText={Boolean(errors.name) && errors.name.message}
+                  />
+                )}
               />
-
-              <TextField
-                label="Email"
-                fullWidth
+              <Controller
                 name="email"
-                {...register("email")}
-                disabled
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Email"
+                    fullWidth
+                    name="email"
+                    {...field}
+                    disabled
+                    error={Boolean(errors.email)}
+                    helperText={Boolean(errors.email) && errors.email.message}
+                  />
+                )}
               />
 
-              <TextField
-                label="Password"
+              <Controller
                 name="password"
-                type={showPassword ? "text" : "password"}
-                fullWidth
-                {...register("password")}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    fullWidth
+                    {...field}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    error={Boolean(errors.password)}
+                    helperText={
+                      Boolean(errors.password) && errors.password.message
+                    }
+                  />
+                )}
               />
 
-              <TextField
-                label="Phone"
+              <Controller
                 name="phone"
-                fullWidth
-                {...register("phone")}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Phone"
+                    name="phone"
+                    fullWidth
+                    {...field}
+                    error={Boolean(errors.phone)}
+                    helperText={Boolean(errors.phone) && errors.phone.message}
+                  />
+                )}
               />
 
-              <TextField
-                select
+              <Controller
                 name="gender"
-                label="Gender"
-                {...register("gender")}
-                defaultValue={data.gender}
-              >
-                <MenuItem value={true}>Male</MenuItem>
-                <MenuItem value={false}>Female</MenuItem>
-              </TextField>
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    name="gender"
+                    label="Gender"
+                    {...field}
+                    defaultValue={data.gender}
+                    onChange={(gen) => setValue("gender", gen.target.value)}
+                  >
+                    <MenuItem value={true}>Male</MenuItem>
+                    <MenuItem value={false}>Female</MenuItem>
+                  </TextField>
+                )}
+              />
+
               <Controller
                 name="birthday"
                 control={control}
@@ -141,7 +240,7 @@ const EditUser = ({data}) => {
                   );
                 }}
               />
-           
+
               <LoadingButton
                 variant="contained"
                 fullWidth

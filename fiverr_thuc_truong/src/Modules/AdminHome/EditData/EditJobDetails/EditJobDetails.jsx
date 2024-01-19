@@ -6,7 +6,29 @@ import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import { updateImageJobDetails, updateJobDetails } from "../../../../API/AdminTechnique";
+import {
+  updateImageJobDetails,
+  updateJobDetails,
+} from "../../../../API/AdminTechnique";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+const schemaEdit = yup.object({
+  id: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  tenChiTiet: yup.string().required("Vui Lòng Nhập Thông Tin"),
+
+  maLoaiCongViec: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+
+  danhSachChiTiet: yup.array().required("Vui Lòng Nhập Thông Tin"),
+});
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -19,27 +41,42 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 const EditJobDetails = ({ data }) => {
-  console.log("data", data.dsChiTietLoai);
+  const navigate = useNavigate();
 
   const { mutate: handleUpdateJobDetails } = useMutation({
     mutationFn: (values) => updateJobDetails(values),
-    onSuccess: () => alert("hay"),
+    onSuccess: () => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập Nhật Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      }),
+        navigate("/admin/manage-jobdetails");
+    },
     onError: () => alert("loi~vai"),
   });
   const { mutate: handleUpdateJobDetailsImage } = useMutation({
     mutationFn: (values) => updateImageJobDetails(values),
-    onSuccess: () => alert("hay"),
-    onError: () => alert("loi~vai"),
   });
-  const { control, handleSubmit, setValue, watch, register } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    register,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       id: data.id,
       tenChiTiet: data.tenNhom,
       maLoaiCongViec: data.maLoaiCongviec,
       danhSachChiTiet: data.dsChiTietLoai.map((item) => item.id),
       formFile: undefined,
-      MaNhomLoaiCongViec: undefined,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
 
   const file = watch("formFile");
@@ -72,19 +109,46 @@ const EditJobDetails = ({ data }) => {
             name="id"
             control={control}
             defaultValue=""
-            render={({ field }) => <TextField label="ID" {...field} disabled />}
+            render={({ field }) => (
+              <TextField
+                label="ID"
+                {...field}
+                disabled
+                error={Boolean(errors.id)}
+                helperText={Boolean(errors.id) && errors.id.message}
+              />
+            )}
           />
           <Controller
             name="tenChiTiet"
             control={control}
             defaultValue=""
-            render={({ field }) => <TextField label="Group Name" {...field} />}
+            render={({ field }) => (
+              <TextField
+                label="Group Name"
+                {...field}
+                error={Boolean(errors.tenChiTiet)}
+                helperText={
+                  Boolean(errors.tenChiTiet) && errors.tenChiTiet.message
+                }
+              />
+            )}
           />
           <Controller
             name="maLoaiCongViec"
             control={control}
             defaultValue=""
-            render={({ field }) => <TextField label="Job Type ID" {...field} />}
+            render={({ field }) => (
+              <TextField
+                label="Job Type ID"
+                {...field}
+                error={Boolean(errors.maLoaiCongViec)}
+                helperText={
+                  Boolean(errors.maLoaiCongViec) &&
+                  errors.maLoaiCongViec.message
+                }
+              />
+            )}
           />
           <Controller
             name="danhSachChiTiet"
@@ -98,6 +162,11 @@ const EditJobDetails = ({ data }) => {
                   const newArray = e.target.value.split(",");
                   setValue("danhSachChiTiet", newArray);
                 }}
+                error={Boolean(errors.danhSachChiTiet)}
+                helperText={
+                  Boolean(errors.danhSachChiTiet) &&
+                  errors.danhSachChiTiet.message
+                }
               />
             )}
           />
@@ -121,12 +190,12 @@ const EditJobDetails = ({ data }) => {
           {file?.length > 0 && (
             <>
               <img src={previewIMG(file[0])} width={270} height={270} />
-              <Button
+              <Button sx={{width:90}}
                 onClick={() => {
                   setValue("formFile", undefined);
                 }}
               >
-                Xoa Hinh
+                Xóa Hình
               </Button>
             </>
           )}

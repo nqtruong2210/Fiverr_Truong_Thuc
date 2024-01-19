@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { LoadingButton } from "@mui/lab";
-import * as yup from "yup";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
+import * as yup from "yup";
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
 import { updateJob } from "../../../../API/AdminTechnique";
 
@@ -23,6 +24,7 @@ const schemaEdit = yup.object({
     .string()
     .required("Vui Lòng Nhập Thông Tin")
     .matches(/^\d+$/, "Vui lòng nhập số"),
+
   giaTien: yup
     .string()
     .required("Vui Lòng Nhập Thông Tin")
@@ -44,7 +46,7 @@ const schemaEdit = yup.object({
   saoCongViec: yup
     .string()
     .required("Vui Lòng Nhập Thông Tin")
-    .matches(/^\d+$/, "Vui lòng nhập số"),
+    .matches(/^[1-5](\.\d+)?$/, "Vui lòng nhập số từ 1-5"),
 });
 const EditJob = ({ data }) => {
   const navigate = useNavigate();
@@ -81,8 +83,7 @@ const EditJob = ({ data }) => {
         showConfirmButton: false,
         timer: 1500,
       }),
-        navigate("/admin/manage-job"),
-        dispatch(EditDataActions.setEditClose());
+        navigate("/admin/manage-job");
     },
   });
 

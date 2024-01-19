@@ -26,11 +26,12 @@ import { PATH } from "../../../Routes/path";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
 
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
-import { deleteCommentAPI, getListCommentAPI } from "../../../API/AdminTechnique";
+import {
+  deleteCommentAPI,
+  getListCommentAPI,
+} from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
-
-
-
+import "../../../Sass/admin/btnStyle.scss";
 
 const ManageComment = () => {
   const [pageIndex, setPageIndex] = useState(1);
@@ -81,15 +82,12 @@ const ManageComment = () => {
   return (
     <Box>
       <ModalField />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-        }}
-      >
-        <Button onClick={handleAddComment}>Add Comment</Button>
-        <Search setKeyword={setKeyword} />
+      <Box>
+        <button className="style-Btn" role="button" onClick={handleAddComment}>
+          <Box className="style-Btn-top text">Add Comment</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
+        </button>
       </Box>
       <Box>
         <TableContainer component={Paper}>
@@ -117,18 +115,21 @@ const ManageComment = () => {
                     </TableCell>
                     <TableCell>
                       <Button
+                        className="btn-Action btn-Action1"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenEdit(item)}
                       >
                         <EditNoteIcon />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action2"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleDeleteComment(item.id)}
                       >
                         <DeleteIcon color="error" />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action3"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenShowInfoComment(item)}
                       >

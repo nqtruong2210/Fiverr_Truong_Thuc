@@ -28,9 +28,12 @@ import ModalField from "../ModalField/ModalField";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
 
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
-import { deleteJobDetails, getListJobStyleDetails } from "../../../API/AdminTechnique";
+import {
+  deleteJobDetails,
+  getListJobStyleDetails,
+} from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
-
+import "../../../Sass/admin/btnStyle.scss";
 
 const ManageJobDetails = () => {
   const [pageIndex, setPageIndex] = useState(1);
@@ -88,7 +91,15 @@ const ManageJobDetails = () => {
           alignItems: "center",
         }}
       >
-        <Button onClick={handleAddJobDetails}>Add Group Job Details</Button>
+        <button
+          className="style-Btn"
+          role="button"
+          onClick={handleAddJobDetails}
+        >
+          <Box className="style-Btn-top text">Add Job Details</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
+        </button>
         <Search setKeyword={setKeyword} />
       </Box>
       <Box>
@@ -138,18 +149,21 @@ const ManageJobDetails = () => {
                     </TableCell>
                     <TableCell>
                       <Button
+                        className="btn-Action btn-Action1"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenEdit(item)}
                       >
                         <EditNoteIcon />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action2"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleDeleteJobDetails(item.id)}
                       >
                         <DeleteIcon color="error" />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action3"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenShowInfoJob(item)}
                       >

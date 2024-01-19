@@ -28,8 +28,7 @@ import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteJobStyle, getListJobStyle } from "../../../API/AdminTechnique";
 import Swal from "sweetalert2";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
-
-
+import "../../../Sass/admin/btnStyle.scss";
 
 const ManageJobStyle = () => {
   const queryClient = useQueryClient();
@@ -89,8 +88,12 @@ const ManageJobStyle = () => {
           alignItems: "center",
         }}
       >
-        <Button onClick={handleAddJob}>Add Job Style</Button>
-        <Search setKeyword={setKeyword}/>
+        <button className="style-Btn" role="button" onClick={handleAddJob}>
+          <Box className="style-Btn-top text">Add Job Style</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
+        </button>
+        <Search setKeyword={setKeyword} />
       </Box>
       <TableContainer component={Paper}>
         <Table>
@@ -117,18 +120,21 @@ const ManageJobStyle = () => {
 
                   <TableCell sx={{ width: "21%" }}>
                     <Button
+                      className="btn-Action btn-Action1"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleOpenEdit(item)}
                     >
                       <EditNoteIcon />
                     </Button>
                     <Button
+                      className="btn-Action btn-Action2"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleDeleteJobStyle(item.id)}
                     >
                       <DeleteIcon color="error" />
                     </Button>
                     <Button
+                      className="btn-Action btn-Action3"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleShowInfo(item)}
                     >

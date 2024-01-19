@@ -28,8 +28,8 @@ import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteServices, getListService } from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
-
-
+import "../../../Sass/admin/btnStyle.scss";
+import "../../../Sass/admin/tableStyle.scss";
 
 const ManageServices = () => {
   const queryClient = useQueryClient();
@@ -88,7 +88,11 @@ const ManageServices = () => {
           alignItems: "center",
         }}
       >
-        <Button onClick={handleAddServices}>Add Services</Button>
+        <button className="style-Btn" role="button" onClick={handleAddServices}>
+          <Box className="style-Btn-top text">Add Services</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
+        </button>
         <Search setKeyword={setKeyword} />
       </Box>
       <TableContainer component={Paper}>
@@ -114,24 +118,29 @@ const ManageServices = () => {
                   <TableCell>{item.id}</TableCell>
                   <TableCell>{item.maCongViec}</TableCell>
                   <TableCell>{item.maNguoiThue}</TableCell>
-                  <TableCell>{dayjs(item.ngayThue).format("DD/MM/YYYY")}</TableCell>
+                  <TableCell>
+                    {dayjs(item.ngayThue).format("DD/MM/YYYY")}
+                  </TableCell>
                   <TableCell>
                     {item.hoanThanh ? "Finish" : "Unfinish"}
                   </TableCell>
                   <TableCell sx={{ width: "21%" }}>
                     <Button
+                      className="btn-Action btn-Action1"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleOpenEdit(item)}
                     >
                       <EditNoteIcon />
                     </Button>
                     <Button
+                      className="btn-Action btn-Action2"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleDeleteService(item.id)}
                     >
                       <DeleteIcon color="error" />
                     </Button>
                     <Button
+                      className="btn-Action btn-Action3"
                       sx={{ minWidth: 0, padding: 1 }}
                       onClick={() => handleShowInfo(item)}
                     >
