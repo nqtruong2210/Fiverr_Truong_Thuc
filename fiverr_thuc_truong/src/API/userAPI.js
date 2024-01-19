@@ -26,7 +26,7 @@ const signUpAPI = async (data) => {
 const getUserById = async (id) => {
   try {
     const response = await fetcher.get(`/users/${id}`);
-    // console.log("User:", response.data.content);
+    console.log("User:", response);
     return response.data.content;
   } catch (error) {
     console.log(`FE Error:${error}`);

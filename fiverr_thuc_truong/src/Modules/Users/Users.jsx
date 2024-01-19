@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { getHiredJob, getUserById } from "../../API/userAPI";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -20,29 +19,33 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
-import { PATH } from "../../Routes/path";
+import { getHiredJob, getUserById } from "../../API/userAPI";
 import { CURRENT_USER } from "../../Constants";
-const Users = () => {
+import { PATH } from "../../Routes/path";
+
+const Users = ({}) => {
   const { sticky, setSticky } = useHeaderStore();
   if (!sticky) {
     setSticky();
   }
-  const navigate = useNavigate();
+
   const { id } = useParams();
   const parseID = parseInt(id, 10);
+
   const { data: users } = useQuery({
     queryKey: ["users", parseID],
-    queryFn: () => getUserById(parseInt(parseID, 10)),
+    queryFn: async () => await getUserById(parseID),
   });
 
   const { data: hiredJob } = useQuery({
     queryKey: ["hired-job"],
-    queryFn: () => getHiredJob(),
+    queryFn: async () => await getHiredJob(),
   });
-  const user = JSON.parse(localStorage.getItem(CURRENT_USER));
-  if (!user) {
-    return navigate(PATH.HOME);
+
+  if (!users) {
+    return <div>Loading...</div>;
   }
+
   return (
     <Box sx={{ flexGrow: 1, marginTop: "80px", padding: "0 80px" }}>
       <Grid container spacing={2} columns={16}>
@@ -181,7 +184,7 @@ const Users = () => {
                 Add your certlfication
               </Typography>
             </Box>
-            {/* Spacing */}
+
             <Typography
               sx={{
                 marginTop: 2,
