@@ -44,10 +44,6 @@ const SignIn = () => {
     },
   });
 
-  // if (currentUser) {
-  //   return <Navigate to={PATH.HOME} />;
-  // }
-
   const onSubmit = (formValue) => {
     handleSignin(formValue);
   };

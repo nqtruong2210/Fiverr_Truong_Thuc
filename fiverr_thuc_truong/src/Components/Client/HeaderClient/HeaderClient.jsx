@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getListJobByName } from "../../../API/jobAPI";
 import { useAuth } from "../../../Contexts/useContext/useContext";
 import { PATH } from "../../../Routes/path";
@@ -43,6 +43,7 @@ const HeaderClient = () => {
     queryFn: () => getListJobByName(search),
   });
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -225,12 +226,14 @@ const HeaderClient = () => {
             alignItems={"center"}
           >
             <Typography>{currentUser.user.name}</Typography>
+            <Link to={`/users/${currentUser.user.id}`}>
+              <Avatar alt="PiTruong" src={currentUser.user.avatar} />
+            </Link>
             <Button
               size="large"
               variant="text"
               onClick={() => {
                 handleLogOut();
-                // navigate(PATH.SIGNIN);
               }}
             >
               LOG OUT

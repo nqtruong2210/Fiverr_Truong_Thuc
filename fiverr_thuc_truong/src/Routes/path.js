@@ -6,8 +6,7 @@ export const PATH = {
   NOTFOUND: "*",
   JOBDETAIL: "/job-detail/:id",
   JOBTYPE: "/job-type/:id",
-  //Admin
-  ADMIN: "/admin",
+  ADMIN: "admin",
   ADMIN_REGISTER: "admin-register",
   ADMIN_LOGIN: "admin-login",
   MANAGE_USER: "manage-user",
