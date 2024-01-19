@@ -13,7 +13,13 @@ import {
 import { LoadingButton } from "@mui/lab";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import { addImageJobDetails, addJobDetails } from "../../../../API/AdminTechnique";
+import {
+  addImageJobDetails,
+  addJobDetails,
+} from "../../../../API/AdminTechnique";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Swal from "sweetalert2";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -25,6 +31,15 @@ const VisuallyHiddenInput = styled("input")({
   left: 0,
   whiteSpace: "nowrap",
   width: 1,
+});
+
+const schemaEdit = yup.object({
+  tenChiTiet: yup.string().required("Vui Lòng Nhập Thông Tin"),
+  maLoaiCongViec: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  danhSachChiTiet: yup.array().required("Vui Lòng Nhập Thông Tin"),
 });
 const AddJobDetails = () => {
   //tanstack
@@ -51,7 +66,13 @@ const AddJobDetails = () => {
         const dataImage = { id: mutationData.id, form: formData };
         handleAddImageJobDetails(dataImage);
       } else {
-        alert("Job details didnot have image!");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Tạo Thành Công (Chưa kèm ảnh)",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
   });
@@ -59,15 +80,33 @@ const AddJobDetails = () => {
   const { mutate: handleAddImageJobDetails } = useMutation({
     mutationKey: ["uploadImage"],
     mutationFn: (payload) => addImageJobDetails(payload),
+    onSuccess: () => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tạo Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
   });
   // useForm
-  const { control, handleSubmit, setValue, watch, register } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    register,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       tenChiTiet: "",
       maLoaiCongViec: "",
       danhSachChiTiet: [],
       formFile: undefined,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
   const file = watch("formFile");
   const previewIMG = (file) => {
@@ -85,16 +124,39 @@ const AddJobDetails = () => {
         <Stack spacing={3}>
           <Controller
             name="tenChiTiet"
-            defaultValue=""
             control={control}
+            defaultValue=""
             render={({ field }) => (
-              <TextField label="Name Job Style" {...field} />
+              <TextField
+                label="Group Name"
+                {...field}
+                error={Boolean(errors.tenChiTiet)}
+                helperText={
+                  Boolean(errors.tenChiTiet) && errors.tenChiTiet.message
+                }
+              />
+            )}
+          />
+          <Controller
+            name="maLoaiCongViec"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                label="Job Type ID"
+                {...field}
+                error={Boolean(errors.maLoaiCongViec)}
+                helperText={
+                  Boolean(errors.maLoaiCongViec) &&
+                  errors.maLoaiCongViec.message
+                }
+              />
             )}
           />
           <Controller
             name="danhSachChiTiet"
-            defaultValue={[]}
             control={control}
+            defaultValue=""
             render={({ field }) => (
               <TextField
                 label="Type Details"
@@ -103,15 +165,12 @@ const AddJobDetails = () => {
                   const newArray = e.target.value.split(",");
                   setValue("danhSachChiTiet", newArray);
                 }}
+                error={Boolean(errors.danhSachChiTiet)}
+                helperText={
+                  Boolean(errors.danhSachChiTiet) &&
+                  errors.danhSachChiTiet.message
+                }
               />
-            )}
-          />
-          <Controller
-            name="maLoaiCongViec"
-            defaultValue=""
-            control={control}
-            render={({ field }) => (
-              <TextField label="ID Job Style Details" {...field} />
             )}
           />
           {!file && (
@@ -144,7 +203,15 @@ const AddJobDetails = () => {
           )}
         </Stack>
 
-        <LoadingButton type="submit">Add</LoadingButton>
+        <LoadingButton
+          sx={{ width: "180px" }}
+          variant="contained"
+          color="warning"
+          size="large"
+          type="submit"
+        >
+          Add
+        </LoadingButton>
       </form>
     </Box>
   );

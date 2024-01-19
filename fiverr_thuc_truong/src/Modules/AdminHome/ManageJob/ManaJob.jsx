@@ -26,7 +26,7 @@ import { AddDataActions } from "../../../store/AddDataSlice/slice";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteJob, getListJobPagination } from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
-
+import "../../../Sass/admin/btnStyle.scss";
 
 const ManaJob = () => {
   const dispatch = useDispatch();
@@ -72,7 +72,7 @@ const ManaJob = () => {
     setPageIndex(newPage);
   };
 
-  const handleAddJobDetails = () => {
+  const handleAddJob = () => {
     dispatch(AddDataActions.setOpenAddJob());
     navigate(`/admin/${PATH.ADD_DATA}`);
   };
@@ -95,13 +95,24 @@ const ManaJob = () => {
           alignItems: "center",
         }}
       >
-        <Button onClick={handleAddJobDetails}>Add Job</Button>
+        <button className="style-Btn" role="button" onClick={handleAddJob}>
+          <Box className="style-Btn-top text">Add Job</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
+        </button>
         <Search setKeyword={setKeyword} />
       </Box>
       <Box>
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            boxShadow:
+              "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+            marginY: 3,
+          }}
+        >
           <Table>
-            <TableHead>
+            <TableHead sx={{ background: "#ff6347" }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return (
@@ -160,18 +171,21 @@ const ManaJob = () => {
 
                     <TableCell>
                       <Button
+                        className="btn-Action btn-Action1"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenEdit(item)}
                       >
                         <EditNoteIcon />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action2"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleDeleteJob(item.id)}
                       >
                         <DeleteIcon color="error" />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action3"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenShowInfoJob(item)}
                       >

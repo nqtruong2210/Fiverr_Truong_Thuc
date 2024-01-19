@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AddJobStyle from "./AddJobStyle";
 import { useSelector } from "react-redux";
 import { Box } from "@mui/material";
@@ -10,6 +10,7 @@ import AddComment from "./AddComment/AddComment";
 import AddJob from "./AddJob";
 
 const AddData = () => {
+  const navigate = useNavigate();
   const {
     isOpenAddJobStyle,
     isOpenAddJob,
@@ -19,6 +20,27 @@ const AddData = () => {
     isOpenAddComment,
   } = useSelector((state) => state.AddData);
 
+  
+  useEffect(() => {
+    const areAllFalse =
+      !isOpenAddJobStyle &&
+      !isOpenAddJobDetails &&
+      !isOpenAddAdmin &&
+      !isOpenAddServices &&
+      !isOpenAddComment &&
+      !isOpenAddJob;
+
+    if (areAllFalse) {
+      navigate("/admin/manage-user");
+    }
+  }, [
+    isOpenAddJobStyle,
+    isOpenAddJobDetails,
+    isOpenAddAdmin,
+    isOpenAddServices,
+    isOpenAddComment,
+    isOpenAddJob,
+  ]);
   return (
     <Box>
       {isOpenAddJobStyle ? (
@@ -31,7 +53,9 @@ const AddData = () => {
         <AddServices />
       ) : isOpenAddComment ? (
         <AddComment />
-      ) : isOpenAddJob ? <AddJob/> : "trong"}
+      ) : (
+        isOpenAddJob && <AddJob />
+      )}
     </Box>
   );
 };

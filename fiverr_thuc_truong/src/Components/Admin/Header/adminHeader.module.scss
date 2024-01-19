@@ -1,25 +1,134 @@
+.navbar {
+  li {
+    a {
+      width: 93%;
+      position: relative;
+      display: inline-block;
+      padding: 15px 9px;
+      letter-spacing: 1px;
+      text-align: center;
+      color: #f47b03;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 0.5s;
+      overflow: hidden;
+      span {
+        position: absolute;
+        display: block;
+      }
+      span:nth-child(1) {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #f47b03);
+        animation: animate1 3s linear infinite;
+      }
+      span:nth-child(2) {
+        top: -100%;
+        right: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(180deg, transparent, #f47b03);
+        animation: animate2 3s linear infinite;
+        animation-delay: 0.75s;
+      }
+      span:nth-child(3) {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(270deg, transparent, #f47b03);
+        animation: animate3 3s linear infinite;
+        animation-delay: 1.5s;
+      }
+      span:nth-child(4) {
+        bottom: -100%;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: linear-gradient(360deg, transparent, #f47b03);
+        animation: animate4 3s linear infinite;
+        animation-delay: 2.25s;
+      }
+    }
+
+    &:hover {
+      a {
+        background: #f47b03;
+        color: #050801;
+        box-shadow: 0 0 5px #f47b03, 0 0 25px #f47b03, 0 0 50px #f47b03,
+          0 0 200px #f47b03;
+        -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+      }
+    }
+  }
+}
+
+@keyframes animate1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes animate2 {
+  0% {
+    top: -100%;
+  }
+
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes animate3 {
+  0% {
+    right: -100%;
+  }
+
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+@keyframes animate4 {
+  0% {
+    bottom: -100%;
+  }
+
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}
 .waviy {
-    position: relative;
-    font-size: 1.8rem;
-    font-weight: 600;
+  position: relative;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+.waviy span {
+  font-family: "Georgia", cursive;
+  position: relative;
+  display: inline-block;
+  color: #a71313;
+  text-transform: uppercase;
+  animation: waviy 3.9s infinite;
+  animation-delay: calc(0.3s * var(--i));
+}
+@keyframes waviy {
+  0%,
+  40%,
+  100% {
+    transform: translateY(0);
   }
-  .waviy span {
-    font-family: "Georgia", cursive;
-    position: relative;
-    display: inline-block;
-    color: #a71313;
-    text-transform: uppercase;
-    animation: waviy 3.9s infinite;
-    animation-delay: calc(0.3s * var(--i));
+  20% {
+    transform: translateY(-20px);
   }
-  @keyframes waviy {
-    0%,
-    40%,
-    100% {
-      transform: translateY(0);
-    }
-    20% {
-      transform: translateY(-20px);
-    }
-  }
-  
+}

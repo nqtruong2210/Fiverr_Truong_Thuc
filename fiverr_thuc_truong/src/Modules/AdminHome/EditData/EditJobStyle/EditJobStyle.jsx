@@ -10,13 +10,23 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import Swal from "sweetalert2";
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
 import { updateJobStyle } from "../../../../API/AdminTechnique";
+import * as yup from "yup";
+import Swal from "sweetalert2";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schemaEdit = yup.object({
+  id: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  tenLoaiCongViec: yup.string().required("Vui Lòng Nhập Thông Tin"),
+});
+
 const EditJobStyle = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -38,11 +48,17 @@ const EditJobStyle = ({ data }) => {
     },
   });
 
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       id: data.id,
       tenLoaiCongViec: data.tenLoaiCongViec,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
   const onSubmit = (values) => {
     handleUpdateJobStyle(values);
@@ -89,10 +105,23 @@ const EditJobStyle = ({ data }) => {
                     </InputAdornment>
                   ),
                 }}
+                error={Boolean(errors.tenLoaiCongViec)}
+                helperText={
+                  Boolean(errors.tenLoaiCongViec) &&
+                  errors.tenLoaiCongViec.message
+                }
               />
             )}
           />
-          <LoadingButton type="submit">Update</LoadingButton>
+          <LoadingButton
+            sx={{ width: "180px" }}
+            variant="contained"
+            color="warning"
+            size="large"
+            type="submit"
+          >
+            Update
+          </LoadingButton>
         </Stack>
       </form>
     </Box>

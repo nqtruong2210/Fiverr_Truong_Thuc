@@ -16,9 +16,38 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
 import { updateServices } from "../../../../API/AdminTechnique";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import Swal from "sweetalert2";
+
+const schemaEdit = yup.object({
+  id: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  maCongViec: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  maNguoiThue: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+
+  ngayThue: yup.date().required("Vui Lòng Chọn Ngày"),
+  hoanThanh: yup.boolean().required("Vui Lòng Chọn Trạng Thái"),
+});
 
 const EditServices = ({ data }) => {
-  const { handleSubmit, control, setValue } = useForm({
+
+  const navigate = useNavigate()
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       id: data.id,
       maCongViec: data.maCongViec,
@@ -26,13 +55,24 @@ const EditServices = ({ data }) => {
       ngayThue: data.ngayThue,
       hoanThanh: data.hoanThanh,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
 
   //tanstack
   const { mutate: handleUpdateServices, isPending } = useMutation({
     mutationKey: ["editData"],
     mutationFn: (values) => updateServices(values),
-    onSuccess: () => alert("ngon"),
+    onSuccess: () => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập Nhật Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      }),
+        navigate("/admin/manage-services");
+    },
   });
 
   //
@@ -61,7 +101,16 @@ const EditServices = ({ data }) => {
                 control={control}
                 defaultValue={data.id}
                 render={({ field }) => {
-                  return <TextField name="id" label="ID" {...field} disabled />;
+                  return (
+                    <TextField
+                      name="id"
+                      label="ID"
+                      {...field}
+                      disabled
+                      error={Boolean(errors.id)}
+                      helperText={Boolean(errors.id) && errors.id.message}
+                    />
+                  );
                 }}
               />
 
@@ -71,7 +120,15 @@ const EditServices = ({ data }) => {
                 defaultValue={data.maCongViec}
                 render={({ field }) => {
                   return (
-                    <TextField name="maCongViec" label="Code Job" {...field} />
+                    <TextField
+                      name="maCongViec"
+                      label="Code Job"
+                      {...field}
+                      error={Boolean(errors.maCongViec)}
+                      helperText={
+                        Boolean(errors.maCongViec) && errors.maCongViec.message
+                      }
+                    />
                   );
                 }}
               />
@@ -86,6 +143,11 @@ const EditServices = ({ data }) => {
                       name="maNguoiThue"
                       label="Code Renter"
                       {...field}
+                      error={Boolean(errors.maNguoiThue)}
+                      helperText={
+                        Boolean(errors.maNguoiThue) &&
+                        errors.maNguoiThue.message
+                      }
                     />
                   );
                 }}
@@ -105,6 +167,10 @@ const EditServices = ({ data }) => {
                         setValue("ngayThue", date);
                       }}
                       {...field}
+                      error={Boolean(errors.ngayThue)}
+                      helperText={
+                        Boolean(errors.ngayThue) && errors.ngayThue.message
+                      }
                     />
                   );
                 }}
@@ -123,6 +189,10 @@ const EditServices = ({ data }) => {
                       onChange={(status) =>
                         setValue("hoanThanh", status.target.value)
                       }
+                      error={Boolean(errors.hoanThanh)}
+                      helperText={
+                        Boolean(errors.hoanThanh) && errors.hoanThanh.message
+                      }
                     >
                       <MenuItem value={true}>Finish</MenuItem>
                       <MenuItem value={false}>Unfinish</MenuItem>
@@ -131,8 +201,8 @@ const EditServices = ({ data }) => {
                 }}
               />
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

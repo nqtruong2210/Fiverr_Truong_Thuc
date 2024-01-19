@@ -72,7 +72,7 @@ const ManageUser = () => {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Your work has been saved",
+        title: "Xóa Thành Công",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -105,22 +105,28 @@ const ManageUser = () => {
           display: "flex",
           justifyContent: "space-around",
           alignItems: "center",
-          margin:3
+          margin: 3,
         }}
       >
-        <button className="button-14" role="button" onClick={handleAddAdmin}>
-          <Box className="button-14-top text">Add Admin</Box>
-          <Box className="button-14-bottom" />
-          <Box className="button-14-base" />
+        <button className="style-Btn" role="button" onClick={handleAddAdmin}>
+          <Box className="style-Btn-top text">Add Admin</Box>
+          <Box className="style-Btn-bottom" />
+          <Box className="style-Btn-base" />
         </button>
 
         <Search setKeyword={setKeyword} />
       </Box>
       <ModalField />
       <Box>
-        <TableContainer  className="tableBackground">
-          <Table className="tableStyle">
-            <TableHead sx={{ padding: 3 }}>
+        <TableContainer
+          sx={{
+            boxShadow:
+              "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+            marginY: 3,
+          }}
+        >
+          <Table>
+            <TableHead sx={{ background: "#ff6347" }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return (
@@ -148,18 +154,21 @@ const ManageUser = () => {
                     <TableCell>{item.role}</TableCell>
                     <TableCell>
                       <Button
+                        className="btn-Action btn-Action1"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleOpenEdit(item)}
                       >
                         <EditNoteIcon />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action2"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleDeleteUser(item.id)}
                       >
                         <DeleteIcon color="error" />
                       </Button>
                       <Button
+                        className="btn-Action btn-Action3"
                         sx={{ minWidth: 0, padding: 1 }}
                         onClick={() => handleShowInfo(item)}
                       >
