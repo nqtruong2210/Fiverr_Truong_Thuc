@@ -59,17 +59,17 @@ export const UpdateUserData = async (payload) => {
 };
 
 export const UpdateProfileData = async (payload) => {
-  console.log("payload", payload);
+ 
   try {
     const response = await fetcher.put(`/users/${Number(payload.id)}`, payload);
     return response.data.content;
   } catch (error) {
-    console.log("error", error);
+    
     alert("loi");
   }
 };
 export const uploadAvatar = async (payload) => {
-  console.log("payload", payload);
+  
   try {
     const response = await fetcher.post("/users/upload-avatar", payload);
 
@@ -96,6 +96,7 @@ export const addJob = async (payload) => {
   try {
     const response = await fetcher.post("/cong-viec", payload);
   } catch (error) {
+    
     alert("loi~vai");
   }
 };
@@ -172,7 +173,7 @@ export const getListJobStyleDetails = async (keyword, pageIndex, pageSize) => {
 };
 
 export const addJobDetails = async (payload) => {
-  console.log("payload", payload);
+
   try {
     const response = await fetcher.post(
       "/chi-tiet-loai-cong-viec/them-nhom-chi-tiet-loai",
@@ -185,7 +186,7 @@ export const addJobDetails = async (payload) => {
 };
 
 export const addImageJobDetails = async (payload) => {
-  console.log("payload", payload);
+
   try {
     const response = await fetcher.post(
       `/chi-tiet-loai-cong-viec/upload-hinh-nhom-loai-cong-viec/${Number(
@@ -204,19 +205,19 @@ export const deleteJobDetails = async (id) => {
 };
 
 export const updateJobDetails = async (payload) => {
-  console.log("payload", payload.id);
+ 
   try {
     const response = await fetcher.put(
       `/chi-tiet-loai-cong-viec/sua-nhom-chi-tiet-loai/${Number(payload.id)}`,
       payload
     );
   } catch (error) {
-    console.log("error", error);
+    
   }
 };
 
 export const updateImageJobDetails = async (payload) => {
-  console.log("payload", payload);
+  
   try {
     const response = await fetcher.post(
       `/chi-tiet-loai-cong-viec/upload-hinh-nhom-loai-cong-viec/${Number(
@@ -242,10 +243,13 @@ export const getListService = async (keyword, pageIndex, pageSize) => {
 };
 
 export const deleteServices = async (id) => {
+  
   try {
     const response = await fetcher.delete(`/thue-cong-viec/${Number(id)}`);
     return response.data.content;
-  } catch (error) {}
+  } catch (error) {
+   
+  }
 };
 
 export const addServices = async (payload) => {
@@ -254,7 +258,7 @@ export const addServices = async (payload) => {
     return response.data.content;
   } catch (error) {
     alert("loi");
-    console.log("error", error);
+    
   }
 };
 
@@ -266,7 +270,7 @@ export const updateServices = async (payload) => {
     );
   } catch (error) {
     alert("loi");
-    console.log("error", error);
+    
   }
 };
 
@@ -280,7 +284,7 @@ export const getListCommentAPI = async () => {
 };
 
 export const deleteCommentAPI = async (id) => {
-  console.log("id", id);
+
   try {
     const response = await fetcher.delete(`/binh-luan/${Number(id)}`, id);
     return response.data.content;
@@ -293,7 +297,7 @@ export const addCommentAPI = async (payload) => {
     return response.data.content;
   } catch (error) {
     alert("Loi");
-    console.log("error", error);
+   
   }
 };
 

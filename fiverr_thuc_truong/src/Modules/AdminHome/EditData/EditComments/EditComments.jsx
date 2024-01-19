@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
+
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,6 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import * as yup from "yup";
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
 
 const schemaEdit = yup.object({
@@ -185,8 +186,8 @@ const EditComments = ({ data }) => {
                 )}
               />
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

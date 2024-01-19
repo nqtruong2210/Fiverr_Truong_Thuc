@@ -97,6 +97,7 @@ const EditUser = ({ data }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Typography
@@ -242,8 +243,8 @@ const EditUser = ({ data }) => {
               />
 
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

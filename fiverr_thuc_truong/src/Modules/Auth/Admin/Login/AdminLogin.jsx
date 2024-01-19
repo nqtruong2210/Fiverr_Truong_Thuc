@@ -22,6 +22,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import style from "./login.module.scss";
 import { loginAdmin } from "../../../../store/LoginAdminSlice/slice";
+import { PATH } from "../../../../Routes/path";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -85,6 +86,9 @@ const AdminLogin = () => {
       console.log("result.payload.user.role", result);
       if (result.payload.user.role === "ADMIN") {
         navigate("/admin/manage-user");
+      }
+      if (result.payload.user.role === "USER") {
+        navigate(PATH.HOME);
       }
     });
   };
