@@ -25,6 +25,7 @@ import ManageServices from "./Modules/AdminHome/ManageServices/ManageServices";
 import ManageComment from "./Modules/AdminHome/ManageComment/ManageComment";
 import AdminLogin from "./Modules/Auth/Admin/Login/AdminLogin";
 import Users from "./Modules/Users/Users";
+import AdminHome from "./Modules/AdminHome";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
               <Route path={PATH.SIGNIN} element={<SignIn />} />
             </Route>
             <Route path={PATH.ADMIN} element={<AdminLayout />}>
+              <Route index element={<AdminHome />} />
               <Route path={PATH.MANAGE_USER} index element={<ManageUser />} />
               <Route path={PATH.MANAGE_JOB} element={<ManaJob />} />
               <Route path={PATH.PROFILE} element={<Profile />} />
