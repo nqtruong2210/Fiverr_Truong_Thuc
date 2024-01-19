@@ -6,6 +6,7 @@ import HeaderAdmin from "../../Components/Admin/Header/HeaderAdmin";
 
 const drawerWidth = 240;
 const AdminLayout = () => {
+  
   return (
     <Box sx={{ display: "flex" }}>
       <HeaderAdmin />

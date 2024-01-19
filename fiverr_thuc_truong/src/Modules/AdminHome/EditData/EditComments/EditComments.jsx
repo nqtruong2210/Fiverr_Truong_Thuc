@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
+import dayjs from "dayjs";
 
 const schemaEdit = yup.object({
   id: yup
@@ -151,12 +152,13 @@ const EditComments = ({ data }) => {
               <Controller
                 name="ngayBinhLuan"
                 control={control}
-                render={({ field }) => {
+                render={( field ) => {
                   return (
                     <DatePicker
                       label="Date"
                       format="DD/MM/YYYY"
                       name="ngayBinhLuan"
+                      defaultValue={dayjs(data.ngayBinhLuan)}
                       views={["day", "month", "year"]}
                       onChange={(date) => {
                         setValue("ngayBinhLuan", date);
