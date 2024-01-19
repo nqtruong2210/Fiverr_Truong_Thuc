@@ -16,9 +16,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { LoadingButton } from "@mui/lab";
 import { updateServices } from "../../../../API/AdminTechnique";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
 import Swal from "sweetalert2";
 
 const schemaEdit = yup.object({
@@ -201,8 +201,8 @@ const EditServices = ({ data }) => {
                 }}
               />
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

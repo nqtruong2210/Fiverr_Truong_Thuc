@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { PATH } from "../../../Routes/path";
 import ModalField from "../ModalField/ModalField";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-
+import Swal from "sweetalert2";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import {
   deleteJobDetails,
@@ -62,7 +62,14 @@ const ManageJobDetails = () => {
     mutationKey: ["DELETE_JOB_STYLE_DETAILS"],
     mutationFn: (id) => deleteJobDetails(id),
     onSuccess: () => {
-      queryClient.invalidateQueries("GET_LIST_JOB_STYLE_DETAILS");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Xóa Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      }),
+        queryClient.invalidateQueries("GET_LIST_JOB_STYLE_DETAILS");
     },
   });
   //
@@ -103,9 +110,16 @@ const ManageJobDetails = () => {
         <Search setKeyword={setKeyword} />
       </Box>
       <Box>
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            boxShadow:
+              "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+            marginY: 3,
+          }}
+        >
           <Table>
-            <TableHead>
+            <TableHead sx={{ background: "#ff6347" }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return <TableCell key={index}>{column}</TableCell>;

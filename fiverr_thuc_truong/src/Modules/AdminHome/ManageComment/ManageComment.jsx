@@ -16,7 +16,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import Search from "../Search/Search";
+
 import dayjs from "dayjs";
 
 import EditNoteIcon from "@mui/icons-material/EditNote";
@@ -32,6 +32,7 @@ import {
 } from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
 import "../../../Sass/admin/btnStyle.scss";
+import Swal from "sweetalert2";
 
 const ManageComment = () => {
   const [pageIndex, setPageIndex] = useState(1);
@@ -63,7 +64,14 @@ const ManageComment = () => {
     mutationKey: ["DELETE_COMMENT"],
     mutationFn: (id) => deleteCommentAPI(id),
     onSuccess: () => {
-      queryClient.invalidateQueries("GET_LIST_COMMENT");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Xóa Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      }),
+        queryClient.invalidateQueries("GET_LIST_COMMENT");
     },
   });
 
@@ -90,9 +98,16 @@ const ManageComment = () => {
         </button>
       </Box>
       <Box>
-        <TableContainer component={Paper}>
+        <TableContainer
+          component={Paper}
+          sx={{
+            boxShadow:
+              "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+            marginY: 3,
+          }}
+        >
           <Table>
-            <TableHead>
+            <TableHead sx={{ background: "#ff6347" }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return <TableCell key={index}>{column}</TableCell>;

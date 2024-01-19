@@ -12,14 +12,18 @@ import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
 import { updateJobStyle } from "../../../../API/AdminTechnique";
 import * as yup from "yup";
+import Swal from "sweetalert2";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 const schemaEdit = yup.object({
+  id: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
   tenLoaiCongViec: yup.string().required("Vui Lòng Nhập Thông Tin"),
 });
 
@@ -39,8 +43,7 @@ const EditJobStyle = ({ data }) => {
         showConfirmButton: false,
         timer: 1500,
       }),
-        navigate("/admin/manage-jobstyle"),
-        dispatch(EditDataActions.setEditClose());
+        navigate("/admin/manage-jobstyle");
     },
   });
 
@@ -103,12 +106,21 @@ const EditJobStyle = ({ data }) => {
                 }}
                 error={Boolean(errors.tenLoaiCongViec)}
                 helperText={
-                  Boolean(errors.tenLoaiCongViec) && errors.tenLoaiCongViec.message
+                  Boolean(errors.tenLoaiCongViec) &&
+                  errors.tenLoaiCongViec.message
                 }
               />
             )}
           />
-          <LoadingButton type="submit">Update</LoadingButton>
+          <LoadingButton
+            sx={{ width: "180px" }}
+            variant="contained"
+            color="warning"
+            size="large"
+            type="submit"
+          >
+            Update
+          </LoadingButton>
         </Stack>
       </form>
     </Box>

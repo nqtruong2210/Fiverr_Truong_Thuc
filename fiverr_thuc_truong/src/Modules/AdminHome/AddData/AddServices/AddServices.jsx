@@ -8,21 +8,54 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Grid, MenuItem, Stack, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { addServices } from "../../../../API/AdminTechnique";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Swal from "sweetalert2";
 
+const schemaEdit = yup.object({
+  maCongViec: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  maNguoiThue: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+
+  ngayThue: yup.date().required("Vui Lòng Chọn Ngày"),
+});
 const AddServices = () => {
-  const { handleSubmit, control, setValue } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    formState: { errors },
+    reset,
+  } = useForm({
     defaultValues: {
       maCongViec: 0,
       maNguoiThue: 0,
       ngayThue: "",
-      hoanThanh: "",
+      hoanThanh: false,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
 
   //tanstack
   const { mutate: handleAddServices, isPending } = useMutation({
     mutationKey: "addService",
     mutationFn: (values) => addServices(values),
+    onSuccess: () => {
+      reset(),
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Cập Nhật Thành Công",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+    },
   });
 
   //
@@ -52,7 +85,17 @@ const AddServices = () => {
                 name="maCongViec"
                 control={control}
                 render={({ field }) => {
-                  return <TextField label="Code Job" {...field} />;
+                  return (
+                    <TextField
+                      name="maCongViec"
+                      label="Code Job"
+                      {...field}
+                      error={Boolean(errors.maCongViec)}
+                      helperText={
+                        Boolean(errors.maCongViec) && errors.maCongViec.message
+                      }
+                    />
+                  );
                 }}
               />
 
@@ -60,7 +103,18 @@ const AddServices = () => {
                 name="maNguoiThue"
                 control={control}
                 render={({ field }) => {
-                  return <TextField label="Code Renter" {...field} />;
+                  return (
+                    <TextField
+                      name="maNguoiThue"
+                      label="Code Renter"
+                      {...field}
+                      error={Boolean(errors.maNguoiThue)}
+                      helperText={
+                        Boolean(errors.maNguoiThue) &&
+                        errors.maNguoiThue.message
+                      }
+                    />
+                  );
                 }}
               />
 
@@ -72,19 +126,22 @@ const AddServices = () => {
                     <DatePicker
                       label="Date Of Hire"
                       format="DD/MM/YYYY"
-                      views={["day", "month", "year"]}
                       onChange={(date) => {
                         setValue("ngayThue", date);
                       }}
                       {...field}
+                      error={Boolean(errors.ngayThue)}
+                      helperText={
+                        Boolean(errors.ngayThue) && errors.ngayThue.message
+                      }
                     />
                   );
                 }}
               />
 
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

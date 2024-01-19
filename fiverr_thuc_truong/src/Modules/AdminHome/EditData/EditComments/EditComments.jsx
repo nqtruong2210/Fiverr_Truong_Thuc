@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import * as yup from "yup";
+
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -12,7 +12,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import * as yup from "yup";
 import { EditDataActions } from "../../../../store/EditdataSlice/slice";
+import dayjs from "dayjs";
 
 const schemaEdit = yup.object({
   id: yup
@@ -150,12 +152,13 @@ const EditComments = ({ data }) => {
               <Controller
                 name="ngayBinhLuan"
                 control={control}
-                render={({ field }) => {
+                render={( field ) => {
                   return (
                     <DatePicker
                       label="Date"
                       format="DD/MM/YYYY"
                       name="ngayBinhLuan"
+                      defaultValue={dayjs(data.ngayBinhLuan)}
                       views={["day", "month", "year"]}
                       onChange={(date) => {
                         setValue("ngayBinhLuan", date);
@@ -185,8 +188,8 @@ const EditComments = ({ data }) => {
                 )}
               />
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

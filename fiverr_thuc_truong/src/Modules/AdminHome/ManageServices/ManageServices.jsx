@@ -24,7 +24,7 @@ import ModalField from "../ModalField/ModalField";
 import { PATH } from "../../../Routes/path";
 import dayjs from "dayjs";
 import { AddDataActions } from "../../../store/AddDataSlice/slice";
-
+import Swal from "sweetalert2";
 import { EditDataActions } from "../../../store/EditdataSlice/slice";
 import { deleteServices, getListService } from "../../../API/AdminTechnique";
 import { ShowDataActions } from "../../../store/ShowDataSlice/slice";
@@ -51,12 +51,18 @@ const ManageServices = () => {
     queryKey: ["GET_LIST_SERVICES", keyword, pageIndex, pageSize],
     queryFn: () => getListService(keyword, pageIndex, pageSize),
   });
-  console.log("listServices", listServices);
 
   const { mutate: handleDeleteService } = useMutation({
     mutationKey: ["DELETE_SERVICES"],
     mutationFn: (id) => deleteServices(id),
     onSuccess: () => {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Xóa Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
       queryClient.invalidateQueries("GET_LIST_SERVICES");
     },
   });
@@ -95,9 +101,16 @@ const ManageServices = () => {
         </button>
         <Search setKeyword={setKeyword} />
       </Box>
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          boxShadow:
+            "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+          marginY: 3,
+        }}
+      >
         <Table>
-          <TableHead>
+          <TableHead sx={{ background: "#ff6347" }}>
             <TableRow>
               {columns.map((column, index) => {
                 return (
