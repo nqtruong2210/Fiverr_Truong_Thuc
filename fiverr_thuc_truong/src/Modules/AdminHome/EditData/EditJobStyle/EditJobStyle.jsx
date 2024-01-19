@@ -43,8 +43,7 @@ const EditJobStyle = ({ data }) => {
         showConfirmButton: false,
         timer: 1500,
       }),
-        navigate("/admin/manage-jobstyle"),
-        dispatch(EditDataActions.setEditClose());
+        navigate("/admin/manage-jobstyle");
     },
   });
 
