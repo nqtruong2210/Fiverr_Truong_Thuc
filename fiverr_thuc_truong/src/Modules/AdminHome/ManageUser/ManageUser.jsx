@@ -72,7 +72,7 @@ const ManageUser = () => {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Your work has been saved",
+        title: "Xóa Thành Công",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -118,9 +118,15 @@ const ManageUser = () => {
       </Box>
       <ModalField />
       <Box>
-        <TableContainer className="tableBackground">
-          <Table className="tableStyle">
-            <TableHead sx={{ padding: 3 }}>
+        <TableContainer
+          sx={{
+            boxShadow:
+              "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+            marginY: 3,
+          }}
+        >
+          <Table>
+            <TableHead sx={{ background: "#ff6347" }}>
               <TableRow>
                 {columns.map((column, index) => {
                   return (

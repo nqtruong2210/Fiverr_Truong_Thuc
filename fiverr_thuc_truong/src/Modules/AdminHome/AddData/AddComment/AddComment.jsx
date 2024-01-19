@@ -7,18 +7,40 @@ import { Controller, useForm } from "react-hook-form";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LoadingButton } from "@mui/lab";
 import { addCommentAPI } from "../../../../API/AdminTechnique";
+import Swal from "sweetalert2";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+const schemaEdit = yup.object({
+  maCongViec: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  maNguoiBinhLuan: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  noiDung: yup.string().required("Vui Lòng Nhập Thông Tin"),
+});
 
 const AddComment = () => {
   //form
-  const { handleSubmit, control, setValue, reset } = useForm({
+  const {
+    handleSubmit,
+    control,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       maCongViec: undefined,
       maNguoiBinhLuan: undefined,
-      ngayBinhLuan: undefined,
+      ngayBinhLuan: "",
       noiDung: "",
       saoBinhLuan: 0,
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
 
   //tanstack
@@ -26,13 +48,14 @@ const AddComment = () => {
     mutationKey: ["ADD_COMMENT"],
     mutationFn: (values) => addCommentAPI(values),
     onSuccess: () => {
-      reset({
-        maCongViec: undefined,
-        maNguoiBinhLuan: undefined,
-        ngayBinhLuan: "",
-        noiDung: "",
-        saoBinhLuan: 0,
-      });
+      reset(),
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Tạo Thành Công",
+          showConfirmButton: false,
+          timer: 1500,
+        });
     },
   });
 
@@ -63,7 +86,15 @@ const AddComment = () => {
                 control={control}
                 defaultValue={""}
                 render={({ field }) => (
-                  <TextField name="maCongViec" label="Code Job" {...field} />
+                  <TextField
+                    name="maCongViec"
+                    label="Code Job"
+                    {...field}
+                    error={Boolean(errors.maCongViec)}
+                    helperText={
+                      Boolean(errors.maCongViec) && errors.maCongViec.message
+                    }
+                  />
                 )}
               />
               <Controller
@@ -75,6 +106,11 @@ const AddComment = () => {
                     name="maNguoiBinhLuan"
                     label="Commenter Code"
                     {...field}
+                    error={Boolean(errors.maNguoiBinhLuan)}
+                    helperText={
+                      Boolean(errors.maNguoiBinhLuan) &&
+                      errors.maNguoiBinhLuan.message
+                    }
                   />
                 )}
               />
@@ -82,14 +118,22 @@ const AddComment = () => {
                 name="noiDung"
                 control={control}
                 render={({ field }) => (
-                  <TextField name="noiDung" label="Content" {...field} />
+                  <TextField
+                    name="noiDung"
+                    label="Content"
+                    {...field}
+                    error={Boolean(errors.noiDung)}
+                    helperText={
+                      Boolean(errors.noiDung) && errors.noiDung.message
+                    }
+                  />
                 )}
               />
 
               <Controller
                 name="ngayBinhLuan"
                 control={control}
-                render={({ field }) => {
+                render={(field) => {
                   return (
                     <DatePicker
                       label="Date"
@@ -125,8 +169,8 @@ const AddComment = () => {
                 )}
               />
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

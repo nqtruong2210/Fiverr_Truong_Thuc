@@ -17,17 +17,43 @@ import { LoadingButton } from "@mui/lab";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { registerAPI } from "../../../../API/AdminTechnique";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import * as yup from "yup";
+import "../../../../Sass/admin/btnStyle.scss";
+
+const schemaEdit = yup.object({
+  name: yup.string().required("Vui Lòng Nhập Thông Tin"),
+  email: yup
+    .string()
+    .email("Vui Lòng Nhập Đúng Định Dạng Mail")
+    .required("Vui Lòng Nhập Thông Tin"),
+
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Password phải có ít nhất 12 ký tự gồm 1 ký tự viết hoa, 1 ký tự thường, 1 ký tự số, 1 ký tự đặc biệt"
+    )
+    .required("Vui Lòng Nhập Thông Tin"),
+  phone: yup
+    .string()
+    .required("Vui Lòng Nhập Thông Tin")
+    .matches(/^\d+$/, "Vui lòng nhập số"),
+  birthday: yup.date().required("Vui lòng chọn ngày"),
+  gender: yup.boolean().required("Vui Lòng Chọn giới tính"),
+});
 
 const AddAdmin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
   const {
-    register,
     handleSubmit,
     formState: { errors },
     control,
     setValue,
+    reset,
   } = useForm({
     defaultValues: {
       name: "",
@@ -40,11 +66,22 @@ const AddAdmin = () => {
       skill: [""],
       certification: [""],
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
   //tanstack
   const { mutate: handleRegister, isPending } = useMutation({
     mutationFn: (values) => registerAPI(values),
-    onSuccess: () => {},
+    onSuccess: () => {
+      reset(),
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Tạo Thành Công",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+    },
     onError: () => {
       alert("loi~vai");
     },
@@ -67,61 +104,101 @@ const AddAdmin = () => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Grid item lg={6}>
+        <Grid item xs={12}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={3}>
-              <TextField
-                label="Name"
-                fullWidth
+              <Controller
                 name="name"
-                {...register("name")}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Name"
+                    fullWidth
+                    name="name"
+                    {...field}
+                    error={Boolean(errors.name)}
+                    helperText={Boolean(errors.name) && errors.name.message}
+                  />
+                )}
               />
-
-              <TextField
-                label="Email"
-                fullWidth
+              <Controller
                 name="email"
-                {...register("email")}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Email"
+                    fullWidth
+                    name="email"
+                    {...field}
+                    error={Boolean(errors.email)}
+                    helperText={Boolean(errors.email) && errors.email.message}
+                  />
+                )}
               />
 
-              <TextField
-                label="Password"
+              <Controller
                 name="password"
-                type={showPassword ? "text" : "password"}
-                fullWidth
-                {...register("password")}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    fullWidth
+                    {...field}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    error={Boolean(errors.password)}
+                    helperText={
+                      Boolean(errors.password) && errors.password.message
+                    }
+                  />
+                )}
               />
 
-              <TextField
-                label="Phone"
+              <Controller
                 name="phone"
-                fullWidth
-                {...register("phone")}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    label="Phone"
+                    name="phone"
+                    fullWidth
+                    {...field}
+                    error={Boolean(errors.phone)}
+                    helperText={Boolean(errors.phone) && errors.phone.message}
+                  />
+                )}
               />
 
-              <TextField
-                select
+              <Controller
                 name="gender"
-                label="Gender"
-                {...register("gender")}
-                defaultValue={""}
-              >
-                <MenuItem value={true}>Male</MenuItem>
-                <MenuItem value={false}>Female</MenuItem>
-              </TextField>
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    select
+                    name="gender"
+                    label="Gender"
+                    {...field}
+                    onChange={(gen) => setValue("gender", gen.target.value)}
+                  >
+                    <MenuItem value={true}>Male</MenuItem>
+                    <MenuItem value={false}>Female</MenuItem>
+                  </TextField>
+                )}
+              />
+
               <Controller
                 name="birthday"
                 control={control}
@@ -130,7 +207,7 @@ const AddAdmin = () => {
                     <DatePicker
                       label="Birthday"
                       format="DD/MM/YYYY"
-                      views={["day", "month", "year"]}
+                      name="birthday"
                       onChange={(date) => {
                         setValue("birthday", date);
                       }}
@@ -141,8 +218,8 @@ const AddAdmin = () => {
               />
 
               <LoadingButton
+                sx={{ width: "180px" }}
                 variant="contained"
-                fullWidth
                 color="warning"
                 size="large"
                 type="submit"

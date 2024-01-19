@@ -11,8 +11,9 @@ import {
   updateJobDetails,
 } from "../../../../API/AdminTechnique";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useNavigate } from "react-router-dom";
 
 const schemaEdit = yup.object({
@@ -190,7 +191,8 @@ const EditJobDetails = ({ data }) => {
           {file?.length > 0 && (
             <>
               <img src={previewIMG(file[0])} width={270} height={270} />
-              <Button sx={{width:90}}
+              <Button
+                sx={{ width: 90 }}
                 onClick={() => {
                   setValue("formFile", undefined);
                 }}
@@ -199,7 +201,15 @@ const EditJobDetails = ({ data }) => {
               </Button>
             </>
           )}
-          <LoadingButton type="submit">Update</LoadingButton>
+          <LoadingButton
+            sx={{ width: "180px" }}
+            variant="contained"
+            color="warning"
+            size="large"
+            type="submit"
+          >
+            Update
+          </LoadingButton>
         </Stack>
       </form>
     </Box>

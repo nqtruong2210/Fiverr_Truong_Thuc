@@ -46,7 +46,7 @@ const schemaEdit = yup.object({
   saoCongViec: yup
     .string()
     .required("Vui Lòng Nhập Thông Tin")
-    .matches(/^[1-5](\.\d+)?$/, "Vui lòng nhập số từ 1-5"),
+    .matches(/^\d+$/, "Vui lòng nhập số"),
 });
 const EditJob = ({ data }) => {
   const navigate = useNavigate();
@@ -106,6 +106,7 @@ const EditJob = ({ data }) => {
               <TextField
                 label="ID"
                 {...field}
+                disabled
                 error={Boolean(errors.id)}
                 helperText={Boolean(errors.id) && errors.id.message}
               />
@@ -238,7 +239,15 @@ const EditJob = ({ data }) => {
               />
             )}
           />
-          <LoadingButton type="submit">Update</LoadingButton>
+          <LoadingButton
+            sx={{ width: "180px" }}
+            variant="contained"
+            color="warning"
+            size="large"
+            type="submit"
+          >
+            Update
+          </LoadingButton>
         </Stack>
       </form>
     </Box>
