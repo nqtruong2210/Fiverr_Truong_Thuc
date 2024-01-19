@@ -23,7 +23,24 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import style from "./login.module.scss";
 import { loginAdmin } from "../../../../store/LoginAdminSlice/slice";
 import { PATH } from "../../../../Routes/path";
+import Swal from "sweetalert2";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
+const schemaEdit = yup.object({
+  email: yup
+    .string()
+    .email("Vui Lòng Nhập Đúng Định Dạng Mail")
+    .required("Vui Lòng Nhập Thông Tin"),
+
+  password: yup
+    .string()
+    .matches(
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+      "Password phải có ít nhất 12 ký tự gồm 1 ký tự viết hoa, 1 ký tự thường, 1 ký tự số, 1 ký tự đặc biệt"
+    )
+    .required("Vui Lòng Nhập Thông Tin"),
+});
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -75,17 +92,23 @@ const AdminLogin = () => {
     },
   });
 
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       email: "",
       password: "",
     },
+    mode: "all",
+    resolver: yupResolver(schemaEdit),
   });
   const onSubmit = (values) => {
     dispatch(loginAdmin(values)).then((result) => {
       console.log("result.payload.user.role", result);
       if (result.payload.user.role === "ADMIN") {
-        navigate("/admin/manage-user");
+        navigate("/admin");
       }
       if (result.payload.user.role === "USER") {
         navigate(PATH.HOME);
@@ -170,6 +193,8 @@ const AdminLogin = () => {
                     sx: { borderRadius: "3vmax", fontSize: "1.2rem" },
                   }}
                   placeholder="Email..."
+                  error={Boolean(errors.email)}
+                  helperText={Boolean(errors.email) && errors.email.message}
                 />
                 <TextField
                   label="Password"
@@ -197,6 +222,10 @@ const AdminLogin = () => {
                   }}
                   placeholder="Password..."
                   sx={{ borderRadius: "3vmax" }}
+                  error={Boolean(errors.password)}
+                  helperText={
+                    Boolean(errors.password) && errors.password.message
+                  }
                 />
                 <LoadingButton
                   type="submit"
