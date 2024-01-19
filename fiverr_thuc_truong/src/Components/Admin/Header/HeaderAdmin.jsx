@@ -67,8 +67,8 @@ const HeaderAdmin = () => {
   const drawer = (
     <Box
       sx={{
-        height: "100%",
         background: "rgb(99, 9, 99)",
+        height: "100%",
       }}
     >
       <Toolbar
@@ -104,7 +104,7 @@ const HeaderAdmin = () => {
         </Box>
       </Toolbar>
       <Divider />
-      <List>
+      <List className={style.navbar}>
         {listManage.map((item) => {
           return (
             <ListItem key={item}>
@@ -124,6 +124,10 @@ const HeaderAdmin = () => {
                 }
               >
                 {item}
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
               </Link>
             </ListItem>
           );
