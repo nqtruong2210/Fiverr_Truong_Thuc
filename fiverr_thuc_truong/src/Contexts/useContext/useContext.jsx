@@ -1,5 +1,3 @@
-// Sử dụng useContext để làm localStorage
-// Setup
 import { createContext, useContext, useState } from "react";
 import { CURRENT_USER } from "../../Constants";
 
@@ -20,6 +18,7 @@ export const UserProvider = ({ children }) => {
     setCurrentUser(null);
     localStorage.clear(CURRENT_USER);
   };
+
   return (
     <UserContext.Provider value={{ currentUser, handleSignIn, handleLogOut }}>
       {children}
