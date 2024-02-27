@@ -19,10 +19,12 @@ const UserInfo = ({ data }) => {
             {data.role}
           </Typography>
           <Typography>Name:{data.name}</Typography>
-          <Typography>Day of Birth:{dayjs(data.birthday).format("DD/MM/YYYY")}</Typography>
+          <Typography>
+            Day of Birth:{dayjs(data.birthday).format("DD/MM/YYYY")}
+          </Typography>
           <Typography>Email:{data.email}</Typography>
           <Typography>Phone:{data.phone}</Typography>
-          <Typography>Gender:{data.Gender ? "Male" : "Female"}</Typography>
+          <Typography>Gender:{data.gender ? "Male" : "Female"}</Typography>
 
           {data.role === "ADMIN" ? null : (
             <Box>

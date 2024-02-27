@@ -64,7 +64,7 @@ const ManageUser = () => {
     queryKey: ["LIST_USER_PAGINATION", keyword, pageIndex, pageSize],
     queryFn: () => getListUserPagination(keyword, pageIndex, pageSize),
   });
-
+  console.log('getListPagination', getListPagination)
   const { mutate: handleDeleteUser } = useMutation({
     mutationKey: ["DELETE_USER"],
     mutationFn: (userId) => deleteUserAPI(userId),

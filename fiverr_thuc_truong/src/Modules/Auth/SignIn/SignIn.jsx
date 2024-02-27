@@ -16,6 +16,7 @@ import { PATH } from "../../../Routes/path";
 import { useMediaQuery } from "../../../hooks/useMediaQuery";
 import { CURRENT_USER } from "../../../Constants";
 import { message } from "antd";
+import Swal from "sweetalert2";
 const SignIn = () => {
   const { handleSignIn: handleSignInContext, currentUser } = useAuth();
   const navigate = useNavigate();
@@ -34,7 +35,18 @@ const SignIn = () => {
       handleSignInContext(values);
       if (values.user.role === "USER") return navigate(PATH.HOME);
 
-      if (values.user.role === "ADMIN") return navigate(PATH.ADMIN);
+      if (values.user.role === "ADMIN") {
+        localStorage.clear(CURRENT_USER);
+        Swal.fire({
+          title: "This is Client Page",
+          icon: "info",
+          html: `
+          Please switch to Admin Page, <a href="/admin-login"><b>Click here.</b></a>
+          `,
+          focusConfirm: false,
+          cancelButtonAriaLabel: "Thumbs down",
+        });
+      }
     },
     onError: () => {
       messageApi.open({

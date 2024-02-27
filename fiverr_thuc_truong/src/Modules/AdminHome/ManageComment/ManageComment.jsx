@@ -124,11 +124,11 @@ const ManageComment = () => {
                     <TableCell>
                       {dayjs(item.ngayBinhLuan).format("DD/MM/YYYY")}
                     </TableCell>
-                    <TableCell>{item.noiDung}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{width:"45%"}}>{item.noiDung}</TableCell>
+                    <TableCell >
                       <Rating value={item.saoBinhLuan} readOnly />
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ display:"flex", justifyContent:"center", alignItems:"center"}}>
                       <Button
                         className="btn-Action btn-Action1"
                         sx={{ minWidth: 0, padding: 1 }}

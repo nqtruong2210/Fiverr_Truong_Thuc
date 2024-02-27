@@ -106,12 +106,20 @@ const AdminLogin = () => {
   });
   const onSubmit = (values) => {
     dispatch(loginAdmin(values)).then((result) => {
-      console.log("result.payload.user.role", result);
       if (result.payload.user.role === "ADMIN") {
         navigate("/admin");
       }
       if (result.payload.user.role === "USER") {
-        navigate(PATH.HOME);
+        Swal.fire({
+          title: "This is Admin Page",
+          icon: "info",
+          html: `
+          Please switch to Client Page, <a href="/"><b>Click here.</b></a>
+          `,
+          focusConfirm: false,
+          cancelButtonAriaLabel: "Thumbs down",
+        });
+        localStorage.clear(CURRENT_USER);
       }
     });
   };
