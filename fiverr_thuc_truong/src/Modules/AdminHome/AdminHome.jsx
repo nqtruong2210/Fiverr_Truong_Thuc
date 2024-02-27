@@ -2,11 +2,16 @@ import { Box, Button } from "@mui/material";
 import React from "react";
 import Lottie from "lottie-react";
 import Animation from "../../Constants/Animation.json";
-import { Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../Routes/path";
+import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 const AdminHome = () => {
+  const {user} = useSelector((state) => state.User)
     const navigate = useNavigate()
+    const started = () => {
+      user? navigate(PATH.MANAGE_USER) : Swal.fire("Vui Lòng Đăng Nhập Tài Khoản Admin");
+    }
   return (
     <Box sx={{ overflow: "hidden" }}>
       <Lottie
@@ -28,7 +33,7 @@ const AdminHome = () => {
             left: "50%",
             transform: "translate(-50%,-50%)",
           }}
-          onClick={() => navigate(PATH.MANAGE_USER)}
+          onClick={started}
         >
           GET STARTED
         </Button>

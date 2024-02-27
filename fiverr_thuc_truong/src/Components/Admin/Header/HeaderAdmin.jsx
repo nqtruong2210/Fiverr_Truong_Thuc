@@ -61,7 +61,7 @@ const HeaderAdmin = () => {
 
   const handleLogout = () => {
     dispatch(UserAction.setLogout());
-    navigate("/admin/manage-user");
+    navigate("/admin");
   };
 
   const drawer = (
@@ -92,7 +92,7 @@ const HeaderAdmin = () => {
               "rgba(240, 46, 170, 0.4)0px 0px 0px 2px inset, rgba(240, 46, 170, 0.3) 10px -10px 0px -3px, rgba(240, 46, 170, 0.2) 10px -10px, rgba(240, 46, 170, 0.1) 20px -20px 0px -3px, rgba(240, 46, 170, 0.05) 20px -20px",
           }}
         >
-          <Link to={"/admin/manage-user"}>
+          <Link to={"/admin"}>
             <Typography
               fontSize={27}
               fontWeight={900}
