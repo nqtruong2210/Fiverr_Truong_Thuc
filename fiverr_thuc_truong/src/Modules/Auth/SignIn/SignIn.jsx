@@ -35,7 +35,6 @@ const SignIn = () => {
       handleSignInContext(values);
       if (values.user.role === "USER") return navigate(PATH.HOME);
 
-
       if (values.user.role === "ADMIN") {
         localStorage.clear(CURRENT_USER);
         Swal.fire({
@@ -48,9 +47,6 @@ const SignIn = () => {
           cancelButtonAriaLabel: "Thumbs down",
         });
       }
-
-      if (values.user.role === "ADMIN") return navigate(PATH.ADMIN);
-
     },
     onError: () => {
       messageApi.open({
