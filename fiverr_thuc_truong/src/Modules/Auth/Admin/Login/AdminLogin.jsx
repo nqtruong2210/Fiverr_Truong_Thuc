@@ -26,6 +26,7 @@ import { PATH } from "../../../../Routes/path";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { message } from "antd";
 
 const schemaEdit = yup.object({
   email: yup
@@ -44,7 +45,7 @@ const schemaEdit = yup.object({
 const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -106,10 +107,11 @@ const AdminLogin = () => {
   });
   const onSubmit = (values) => {
     dispatch(loginAdmin(values)).then((result) => {
-      if (result.payload.user.role === "ADMIN") {
+      console.log("result", result);
+      if (result.payload?.user.role === "ADMIN") {
         navigate("/admin");
       }
-      if (result.payload.user.role === "USER") {
+      if (result.payload?.user.role === "USER") {
         Swal.fire({
           title: "This is Admin Page",
           icon: "info",
@@ -120,6 +122,12 @@ const AdminLogin = () => {
           cancelButtonAriaLabel: "Thumbs down",
         });
         localStorage.clear(CURRENT_USER);
+      }
+      if (result.payload === undefined) {
+        messageApi.open({
+          type: "error",
+          content: "Tài khoản hoặc mật khẩu sai",
+        });
       }
     });
   };
@@ -242,8 +250,10 @@ const AdminLogin = () => {
                 >
                   Login
                 </LoadingButton>
+                
               </Stack>
             </form>
+            {contextHolder}
           </Grid>
         </Grid>
       </Box>

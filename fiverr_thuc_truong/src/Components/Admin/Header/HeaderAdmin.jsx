@@ -31,15 +31,18 @@ const HeaderAdmin = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.User);
   useEffect(() => {
-    if (user?.user?.role === "USER") {
-      navigate(PATH.HOME);
-      Swal.fire({
-        icon: "error",
-        title: "WARNING",
-        text: "This account does not have permission to access!",
-      });
+    if (!user) {
+      navigate("/admin-login")
     }
-  }, []);
+  })
+  if (user?.user?.role === "USER") {
+    navigate(PATH.HOME);
+    Swal.fire({
+      icon: "error",
+      title: "WARNING",
+      text: "This account does not have permission to access!",
+    });
+  }
   const ID = user?.user?.id;
   const { data: currentUser = {} } = useQuery({
     queryKey: ["USER", ID],
