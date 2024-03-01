@@ -33,14 +33,6 @@ const schemaEdit = yup.object({
     .string()
     .email("Vui Lòng Nhập Đúng Định Dạng Mail")
     .required("Vui Lòng Nhập Thông Tin"),
-
-  password: yup
-    .string()
-    .matches(
-      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-      "Password phải có ít nhất 12 ký tự gồm 1 ký tự viết hoa, 1 ký tự thường, 1 ký tự số, 1 ký tự đặc biệt"
-    )
-    .required("Vui Lòng Nhập Thông Tin"),
   phone: yup
     .string()
     .required("Vui Lòng Nhập Thông Tin")
@@ -50,7 +42,7 @@ const schemaEdit = yup.object({
 });
 const EditUser = ({ data }) => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     handleSubmit,
     formState: { errors },
@@ -97,7 +89,7 @@ const EditUser = ({ data }) => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Typography
@@ -154,37 +146,6 @@ const EditUser = ({ data }) => {
                     disabled
                     error={Boolean(errors.email)}
                     helperText={Boolean(errors.email) && errors.email.message}
-                  />
-                )}
-              />
-
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    label="Password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    fullWidth
-                    {...field}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    error={Boolean(errors.password)}
-                    helperText={
-                      Boolean(errors.password) && errors.password.message
-                    }
                   />
                 )}
               />

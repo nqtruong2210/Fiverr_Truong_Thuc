@@ -6,11 +6,10 @@ export const loginAdmin = createAsyncThunk(
   "user/loginuser",
   async (payload) => {
     try {
-      const request = await fetcher.post("/auth/signin", payload);
-      const response = request.data.content;
+      const response = await fetcher.post("/auth/signin", payload);
 
-      localStorage.setItem(CURRENT_USER, JSON.stringify(response));
-      return response;
+      localStorage.setItem(CURRENT_USER, JSON.stringify(response.data.content));
+      return response.data.content;
     } catch (error) {
       throw alert("loi");
     }
@@ -33,9 +32,9 @@ export const LoginUserSlice = createSlice({
       localStorage.removeItem(CURRENT_USER);
       state.user = undefined;
     },
-    updateUser: (state, {payload}) => {
-      console.log('state.user', state.user)
-    }
+    updateUser: (state, { payload }) => {
+      console.log("state.user", state.user);
+    },
   },
   extraReducers: (builder) => {
     builder
