@@ -97,11 +97,7 @@ const EditJobDetails = ({ data }) => {
     }
     handleUpdateJobDetails(updateData);
   };
-  useEffect(() => {
-    if (file?.length > 0) {
-      console.log("previewImage", previewIMG(file?.[0])); // url
-    }
-  }, [file]);
+  
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>

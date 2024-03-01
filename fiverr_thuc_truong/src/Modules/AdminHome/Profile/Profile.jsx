@@ -22,7 +22,7 @@ import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { UserAction } from "../../../store/LoginAdminSlice/slice";
 import { UpdateProfileData, uploadAvatar } from "../../../API/AdminTechnique";
-
+import Swal from "sweetalert2";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -85,13 +85,20 @@ const Profile = () => {
   const onSubmit = async (values) => {
     const updateData = { ...values };
     delete updateData.formFile;
+    const formData = new FormData();
     if (values.formFile.length > 0) {
-      const formData = new FormData();
       formData.append("formFile", values.formFile[0]);
-
-      handleUploadAvatar(formData);
     }
-    const result = handleUpdate(updateData);
+    const result = (data1, data2) => {
+      if (values.formFile.length > 0) {
+        handleUploadAvatar(data1);
+        handleUpdate(data2);
+      } else {
+        handleUpdate(data2);
+      }
+      Swal.fire("Please Login!");
+    };
+    return result(formData, updateData);
   };
 
   return (

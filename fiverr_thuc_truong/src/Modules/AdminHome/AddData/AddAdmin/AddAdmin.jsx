@@ -21,6 +21,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import "../../../../Sass/admin/btnStyle.scss";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../../../Routes/path";
 
 const schemaEdit = yup.object({
   name: yup.string().required("Vui Lòng Nhập Thông Tin"),
@@ -45,6 +47,7 @@ const schemaEdit = yup.object({
 });
 
 const AddAdmin = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
@@ -73,14 +76,14 @@ const AddAdmin = () => {
   const { mutate: handleRegister, isPending } = useMutation({
     mutationFn: (values) => registerAPI(values),
     onSuccess: () => {
-      reset(),
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Tạo Thành Công",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      reset(), navigate(PATH.MANAGE_USER);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tạo Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
     onError: () => {
       alert("loi~vai");

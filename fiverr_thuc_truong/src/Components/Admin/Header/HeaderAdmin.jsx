@@ -8,7 +8,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemButton,
   Menu,
   MenuItem,
   Toolbar,
@@ -16,19 +15,31 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./adminHeader.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
-
+import Swal from "sweetalert2";
 import { PATH } from "../../../Routes/path";
 import { UserAction } from "../../../store/LoginAdminSlice/slice";
 import { getUserByIdAPI } from "../../../API/AdminTechnique";
 
 const drawerWidth = 240;
 const HeaderAdmin = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.User);
+  useEffect(() => {
+    if (user?.user?.role === "USER") {
+      navigate(PATH.HOME);
+      Swal.fire({
+        icon: "error",
+        title: "WARNING",
+        text: "This account does not have permission to access!",
+      });
+    }
+  }, []);
   const ID = user?.user?.id;
   const { data: currentUser = {} } = useQuery({
     queryKey: ["USER", ID],
@@ -44,8 +55,6 @@ const HeaderAdmin = () => {
     "ManageJobDetails",
     "ManageComment",
   ];
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -193,11 +202,30 @@ const HeaderAdmin = () => {
                 Đăng nhập
               </Button>
             ) : (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={currentUser.avatar} />
-                </IconButton>
-              </Tooltip>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: "black",
+                    paddingRight: "9px",
+                    fontWeight: 600,
+                    fontSize: "2rem",
+                    display: { xs: "none", sm: "block" },
+                  }}
+                >
+                  {user.user.name}
+                </Typography>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt="Remy Sharp" src={currentUser.avatar} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             )}
 
             <Menu
@@ -217,10 +245,14 @@ const HeaderAdmin = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <Button onClick={handleLogout}>Logout</Button>
-                <Button>
+                <Typography onClick={handleLogout} textAlign={"center"}>
+                  Log-out
+                </Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography>
                   <Link to={PATH.PROFILE}>Profile</Link>
-                </Button>
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>

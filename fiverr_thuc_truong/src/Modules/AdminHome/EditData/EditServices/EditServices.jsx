@@ -208,7 +208,7 @@ const EditServices = ({ data }) => {
                 type="submit"
                 loading={isPending}
               >
-                ADD
+                Update
               </LoadingButton>
             </Stack>
           </form>
