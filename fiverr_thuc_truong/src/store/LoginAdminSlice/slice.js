@@ -11,7 +11,7 @@ export const loginAdmin = createAsyncThunk(
       localStorage.setItem(CURRENT_USER, JSON.stringify(response.data.content));
       return response.data.content;
     } catch (error) {
-      throw alert("loi");
+      
     }
   }
 );
