@@ -35,14 +35,14 @@ const AddJobStyle = () => {
     mutationKey: ["addJob"],
     mutationFn: (values) => addJobStyle(values),
     onSuccess: () => {
-      reset(),
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Tạo Thành Công",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      reset(), navigate("/admin/manage-jobstyle");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tạo Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   });
 

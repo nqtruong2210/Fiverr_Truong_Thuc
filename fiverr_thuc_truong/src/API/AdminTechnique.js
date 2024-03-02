@@ -6,7 +6,7 @@ export const registerAPI = async (payload) => {
     const response = await fetcher.post("/users", payload);
     return response.data.content;
   } catch (error) {
-    throw alert("loi~");
+    throw alert("Email đã tồn tại");
   }
 };
 //USER

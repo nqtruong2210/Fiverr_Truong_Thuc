@@ -8,6 +8,8 @@ import { addJob } from "../../../../API/AdminTechnique";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../../../Routes/path";
 
 const schemaEdit = yup.object({
   tenCongViec: yup.string().required("Vui Lòng Nhập Thông Tin"),
@@ -42,6 +44,7 @@ const schemaEdit = yup.object({
 
 const AddJob = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -66,6 +69,7 @@ const AddJob = () => {
   const { mutate: handleAddJob, isPending } = useMutation({
     mutationFn: (values) => addJob(values),
     onSuccess: () => {
+      navigate("/admin/manage-job");
       Swal.fire({
         position: "top-end",
         icon: "success",

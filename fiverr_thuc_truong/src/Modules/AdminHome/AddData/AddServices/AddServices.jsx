@@ -11,6 +11,8 @@ import { addServices } from "../../../../API/AdminTechnique";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../../../Routes/path";
 
 const schemaEdit = yup.object({
   maCongViec: yup
@@ -25,6 +27,7 @@ const schemaEdit = yup.object({
   ngayThue: yup.date().required("Vui Lòng Chọn Ngày"),
 });
 const AddServices = () => {
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -47,14 +50,14 @@ const AddServices = () => {
     mutationKey: "addService",
     mutationFn: (values) => addServices(values),
     onSuccess: () => {
-      reset(),
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Cập Nhật Thành Công",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      reset(), navigate("/admin/manage-services");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập Nhật Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   });
 
