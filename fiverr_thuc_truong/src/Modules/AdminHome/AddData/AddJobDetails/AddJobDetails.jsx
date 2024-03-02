@@ -20,6 +20,8 @@ import {
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../../../Routes/path";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -42,6 +44,7 @@ const schemaEdit = yup.object({
   danhSachChiTiet: yup.array().required("Vui Lòng Nhập Thông Tin"),
 });
 const AddJobDetails = () => {
+  const navigate = useNavigate();
   //tanstack
   const { mutate: handleAddJobDetails, data: mutationData } = useMutation({
     mutationKey: ["addJobDetails"],
@@ -74,6 +77,7 @@ const AddJobDetails = () => {
           timer: 1500,
         });
       }
+      navigate("/admin/manage-jobdetails");
     },
   });
 

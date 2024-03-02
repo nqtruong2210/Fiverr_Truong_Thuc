@@ -76,7 +76,7 @@ const AddAdmin = () => {
   const { mutate: handleRegister, isPending } = useMutation({
     mutationFn: (values) => registerAPI(values),
     onSuccess: () => {
-      reset(), navigate(PATH.MANAGE_USER);
+      reset(), navigate("/admin/manage-user");
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -85,9 +85,7 @@ const AddAdmin = () => {
         timer: 1500,
       });
     },
-    onError: () => {
-      alert("loi~vai");
-    },
+    
   });
 
   const onSubmit = (values) => {

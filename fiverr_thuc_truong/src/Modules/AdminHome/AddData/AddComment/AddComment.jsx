@@ -10,6 +10,8 @@ import { addCommentAPI } from "../../../../API/AdminTechnique";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "../../../../Routes/path";
 
 const schemaEdit = yup.object({
   maCongViec: yup
@@ -24,6 +26,7 @@ const schemaEdit = yup.object({
 });
 
 const AddComment = () => {
+  const navigate = useNavigate();
   //form
   const {
     handleSubmit,
@@ -48,14 +51,14 @@ const AddComment = () => {
     mutationKey: ["ADD_COMMENT"],
     mutationFn: (values) => addCommentAPI(values),
     onSuccess: () => {
-      reset(),
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Tạo Thành Công",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+      reset(), navigate("/admin/manage-comment");
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tạo Thành Công",
+        showConfirmButton: false,
+        timer: 1500,
+      });
     },
   });
 
